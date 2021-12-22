@@ -1,0 +1,137 @@
+{
+  "version": 3,
+  "targets": {
+    "net5.0": {
+      "CoreBusiness/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/CoreBusiness.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CoreBusiness.dll": {}
+        }
+      },
+      "DataStore/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Library": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DataStore.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataStore.dll": {}
+        }
+      },
+      "Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "CoreBusiness": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Library.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CoreBusiness/1.0.0": {
+      "type": "project",
+      "path": "../CoreBusiness/CoreBusiness.csproj",
+      "msbuildProject": "../CoreBusiness/CoreBusiness.csproj"
+    },
+    "DataStore/1.0.0": {
+      "type": "project",
+      "path": "../DataStore/DataStore.csproj",
+      "msbuildProject": "../DataStore/DataStore.csproj"
+    },
+    "Library/1.0.0": {
+      "type": "project",
+      "path": "../Library/Library.csproj",
+      "msbuildProject": "../Library/Library.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net5.0": [
+      "CoreBusiness >= 1.0.0",
+      "DataStore >= 1.0.0",
+      "Library >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\ronie\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\CODIGOS\\Ecommerce\\WebApp\\WebApp.csproj",
+      "projectName": "WebApp",
+      "projectPath": "D:\\CODIGOS\\Ecommerce\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\ronie\\.nuget\\packages\\",
+      "outputPath": "D:\\CODIGOS\\Ecommerce\\WebApp\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\ronie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net5.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "projectReferences": {
+            "D:\\CODIGOS\\Ecommerce\\CoreBusiness\\CoreBusiness.csproj": {
+              "projectPath": "D:\\CODIGOS\\Ecommerce\\CoreBusiness\\CoreBusiness.csproj"
+            },
+            "D:\\CODIGOS\\Ecommerce\\DataStore\\DataStore.csproj": {
+              "projectPath": "D:\\CODIGOS\\Ecommerce\\DataStore\\DataStore.csproj"
+            },
+            "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj": {
+              "projectPath": "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net5.0": {
+        "targetAlias": "net5.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+﻿@page "/produtos"
+
+@inject NavigationManager NavigationManager
+@inject IViewProdutos ViewProdutos
+@inject IGetCategoryById GetCategoryById
+
+<h3>Produtos</h3>
+<br />
+@if (produtos != null)
+ {
+     <table class="table table-bordered">
+         <thead>
+             <tr>
+                 <th>Categoria</th>
+                 <th>Nome</th>
+                 <th>Quantidade</th>
+                 <th>Preço</th>
+             </tr>
+         </thead>
+         <tbody>
+             @foreach (var product in produtos)
+             {
+                 <tr>
+                     <td>@GetCategoryById.Execute(product.CategoryId.Value)?.Name</td>
+                     <td>@product.Name</td>
+                     <td>@product.Quantidade</td>
+                     <td>@(Math.Round(product.Preco.Value, 2))</td>
+                 </tr>
+             }
+         </tbody>
+     </table>
+ }
+<br />
+<button type="button" class="btn btn-primary" @onclick="OnClickAddProduto">Novo Produto</button>
+
+@code {
+
+    private IEnumerable<CoreBusiness.Produto> produtos;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        produtos = ViewProdutos.Execute();
+    }
+
+    private void OnClickAddProduto()
+    {
+        NavigationManager.NavigateTo("/NovoProduto");
+    }
+}
