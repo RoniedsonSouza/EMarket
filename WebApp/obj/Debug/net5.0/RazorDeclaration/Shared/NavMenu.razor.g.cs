@@ -77,27 +77,34 @@ using WebApp;
 #nullable disable
 #nullable restore
 #line 10 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using WebApp.Shared;
+using WebApp.Controls;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using CoreBusiness;
+using WebApp.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using Library.UseCaseInterfaces.ICategory;
+using CoreBusiness;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ICategory;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.IProduto;
 
 #line default
@@ -111,7 +118,7 @@ using Library.UseCaseInterfaces.IProduto;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 38 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
+#line 33 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

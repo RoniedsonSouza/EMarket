@@ -77,27 +77,34 @@ using WebApp;
 #nullable disable
 #nullable restore
 #line 10 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using WebApp.Shared;
+using WebApp.Controls;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using CoreBusiness;
+using WebApp.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using Library.UseCaseInterfaces.ICategory;
+using CoreBusiness;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ICategory;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.IProduto;
 
 #line default
@@ -112,7 +119,7 @@ using Library.UseCaseInterfaces.IProduto;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 36 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
+#line 42 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
        
 
     private IEnumerable<CoreBusiness.Produto> produtos;
@@ -129,9 +136,20 @@ using Library.UseCaseInterfaces.IProduto;
         NavigationManager.NavigateTo("/NovoProduto");
     }
 
+    private void OnEditProduto(Produto produto)
+    {
+        NavigationManager.NavigateTo($"/editarproduto/{produto.ProdutoId}");
+    }
+
+    private void OnDeleteProduto(int produtoId)
+    {
+        DeleteProduto.Execute(produtoId);
+    }
+
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDeleteProduto DeleteProduto { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewProdutos ViewProdutos { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }

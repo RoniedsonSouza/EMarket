@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace WebApp.Pages
+namespace WebApp.Pages.Produtos
 {
     #line hidden
     using System;
@@ -77,34 +77,41 @@ using WebApp;
 #nullable disable
 #nullable restore
 #line 10 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using WebApp.Shared;
+using WebApp.Controls;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using CoreBusiness;
+using WebApp.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using Library.UseCaseInterfaces.ICategory;
+using CoreBusiness;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ICategory;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.IProduto;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/counter")]
-    public partial class Counter : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/caixa_console")]
+    public partial class CaixaConsoleComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -112,14 +119,21 @@ using Library.UseCaseInterfaces.IProduto;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 9 "D:\CODIGOS\Ecommerce\WebApp\Pages\Counter.razor"
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\CaixaConsoleComponent.razor"
        
-    private int currentCount = 0;
 
-    private void IncrementCount()
+    private Produto selectedProduto;
+
+    private void SelectedProduto(Produto produto)
     {
-        currentCount++;
+        selectedProduto = produto;
     }
+
+    private void SellProduto(Produto produto)
+    {
+
+    }
+
 
 #line default
 #line hidden

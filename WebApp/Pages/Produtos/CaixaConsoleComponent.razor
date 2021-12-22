@@ -1,0 +1,29 @@
+﻿@page "/caixa_console"
+
+<h3>Caixa</h3>
+<br/>
+<div class="row">
+    <div class="col-4">
+        <SelectProdutoForSellingComponent OnProdutoSelected="SelectedProduto"></SelectProdutoForSellingComponent>
+        <VenderProdutoComponent SelectedProduto="selectedProduto" OnProdutoVendido="SellProduto"></VenderProdutoComponent>
+    </div>
+    <div class="col-4">
+        Place Hodler
+    </div>
+</div>
+
+@code {
+
+    private Produto selectedProduto;
+
+    private void SelectedProduto(Produto produto)
+    {
+        selectedProduto = produto;
+    }
+
+    private void SellProduto(Produto produto)
+    {
+
+    }
+
+}

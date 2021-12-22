@@ -2,19 +2,19 @@
 using Library.PluginInterfaces;
 using Library.UseCaseInterfaces.IProduto;
 
-namespace Library.Produtos
+namespace Library.Produtos.Commands
 {
-    public class AddProduto : IAddProduto
+    public class EditProduto : IEditProduto
     {
         private readonly IProdutoRepository produtoRepository;
 
-        public AddProduto(IProdutoRepository produtoRepository)
+        public EditProduto(IProdutoRepository produtoRepository)
         {
             this.produtoRepository = produtoRepository;
         }
         public void Execute(Produto produto)
         {
-            produtoRepository.AddProduto(produto);
+            produtoRepository.UpdateProduto(produto);
         }
     }
 }

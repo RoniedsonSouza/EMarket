@@ -11,5 +11,9 @@ namespace Library.PluginInterfaces
     {
         IEnumerable<Produto> GetProdutos();
         void AddProduto(Produto produto);
+        void UpdateProduto(Produto produto);
+        void DeleteProduto(int produtoId);
+        IEnumerable<Produto> GetProdutosByCategoryId(int categoryId);
+        Produto GetProdutoById(int produtoId);
     }
 }

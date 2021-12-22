@@ -74,27 +74,34 @@ using WebApp;
 #nullable disable
 #nullable restore
 #line 10 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using WebApp.Shared;
+using WebApp.Controls;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using CoreBusiness;
+using WebApp.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using Library.UseCaseInterfaces.ICategory;
+using CoreBusiness;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ICategory;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.IProduto;
 
 #line default

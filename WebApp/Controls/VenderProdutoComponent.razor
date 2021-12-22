@@ -1,0 +1,77 @@
+﻿@inject IGetProdutoById GetProdutoById
+@inject IVenderProduto VenderProduto
+
+@if (produtoToSell != null)
+ {
+    <EditForm Model="produtoToSell" OnValidSubmit="SellProduto">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="name">Nome do Produto</label>
+            <input id="name" type="text" class="form-control" readonly value="@produtoToSell.Name" />
+        </div>
+        <div class="form-group">
+            <label for="preco">Preço</label>
+            <input id="preco" type="text" class="form-control" readonly value="@(string.Format("{0:c}", produtoToSell.Preco))" />
+        </div>
+        <div class="form-group">
+            <label for="quant">Quantidade</label>
+            <InputNumber id="quant" class="form-control" @bind-Value="@produtoToSell.Quantidade"></InputNumber>
+        </div>
+        <button type="submit" class="btn btn-primary">Vender</button>
+    </EditForm>
+    <br/>
+    @if (!string.IsNullOrWhiteSpace(errorMessage)) 
+     {
+        <div class="alert alert-danger">@errorMessage</div>
+     }
+    
+ }
+
+@code {
+
+    private Produto produtoToSell;
+    private string errorMessage;
+
+    [Parameter]
+    public Produto SelectedProduto { get; set; }
+
+    [Parameter]
+    public EventCallback<Produto> OnProdutoVendido { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (SelectedProduto != null)
+        {
+            produtoToSell = new Produto
+            {
+                ProdutoId = SelectedProduto.ProdutoId,
+                Name = SelectedProduto.Name,
+                CategoryId = SelectedProduto.CategoryId,
+                Quantidade = 0,
+                Preco = SelectedProduto.Preco
+            };
+        }
+    }
+
+    private void SellProduto()
+    {
+        var produto = GetProdutoById.Execute(produtoToSell.ProdutoId);
+
+        if (produtoToSell.Quantidade <= 0) 
+        {
+            errorMessage = "Quantidade inválida!";
+
+        } else if (produto.Quantidade >= produtoToSell.Quantidade) {
+            OnProdutoVendido.InvokeAsync(produtoToSell);
+            errorMessage = string.Empty;
+            VenderProduto.Execute(produtoToSell.ProdutoId, produtoToSell.Quantidade.Value);
+
+        } else {
+            errorMessage = $"Existem {produto.Quantidade} unidades do produto {produto.Name}. Quantidade de venda insuficiente";
+        }
+
+    }
+}

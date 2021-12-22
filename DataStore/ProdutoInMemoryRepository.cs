@@ -43,5 +43,33 @@ namespace DataStore
         {
             return produtos;
         }
+
+        public void UpdateProduto(Produto produto)
+        {
+            var produtoToUpdate = GetProdutoById(produto.ProdutoId);
+            if (produtoToUpdate != null)
+            {
+                produtoToUpdate.Name = produto.Name;
+                produtoToUpdate.CategoryId = produto.CategoryId;
+                produtoToUpdate.Quantidade = produto.Quantidade;
+                produtoToUpdate.Preco = produto.Preco;
+            }
+        }
+
+        public Produto GetProdutoById(int produtoId)
+        {
+            return produtos.FirstOrDefault(x => x.ProdutoId == produtoId);
+        }
+
+        public void DeleteProduto(int produtoId)
+        {
+            var produtoToDelete = GetProdutoById(produtoId);
+            if (produtoToDelete != null) produtos.Remove(produtoToDelete);
+        }
+
+        public IEnumerable<Produto> GetProdutosByCategoryId(int categoryId)
+        {
+            return produtos.Where(x => x.CategoryId == categoryId);
+        }
     }
 }

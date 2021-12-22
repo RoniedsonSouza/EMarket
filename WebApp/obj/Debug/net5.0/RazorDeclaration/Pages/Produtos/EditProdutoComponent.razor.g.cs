@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace WebApp.Pages
+namespace WebApp.Pages.Produtos
 {
     #line hidden
     using System;
@@ -77,41 +77,41 @@ using WebApp;
 #nullable disable
 #nullable restore
 #line 10 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using WebApp.Shared;
+using WebApp.Controls;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using CoreBusiness;
+using WebApp.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using Library.UseCaseInterfaces.ICategory;
+using CoreBusiness;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
-using Library.UseCaseInterfaces.IProduto;
+using Library.UseCaseInterfaces.ICategory;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\CODIGOS\Ecommerce\WebApp\Pages\FetchData.razor"
-using WebApp.Data;
+#line 14 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IProduto;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/fetchdata")]
-    public partial class FetchData : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/editarproduto/{produtoId}")]
+    public partial class EditProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -119,19 +119,56 @@ using WebApp.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "D:\CODIGOS\Ecommerce\WebApp\Pages\FetchData.razor"
+#line 52 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
        
-    private WeatherForecast[] forecasts;
+    [Parameter]
+    public string ProdutoId { get; set; }
+    private Produto produto;
+    private IEnumerable<Category> categories;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        base.OnInitialized();
+        categories = ViewCategoriesUseCase.Execute();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (int.TryParse(this.ProdutoId, out int iProdutoId))
+        {
+            var prod = GetProdutoById.Execute(iProdutoId);
+            this.produto = new Produto {
+                ProdutoId = prod.ProdutoId,
+                Name = prod.Name,
+                CategoryId = prod.CategoryId,
+                Quantidade = prod.Quantidade,
+                Preco = prod.Preco
+            };
+        }
+    }
+
+    private void OnValidSubmit()
+    {
+        EditProduto.Execute(this.produto);
+        NavigationManager.NavigateTo("/produtos");
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/produtos");
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WeatherForecastService ForecastService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewCategoriesUseCase ViewCategoriesUseCase { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEditProduto EditProduto { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetProdutoById GetProdutoById { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IAddProduto IAddProduto { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
     }
 }
 #pragma warning restore 1591

@@ -5,6 +5,8 @@ using Library.Categoria.Queries;
 using Library.DataStorePluginInterfaces;
 using Library.PluginInterfaces;
 using Library.Produtos;
+using Library.Produtos.Commands;
+using Library.Produtos.Queries;
 using Library.UseCaseInterfaces.ICategory;
 using Library.UseCaseInterfaces.IProduto;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +45,11 @@ namespace WebApp
             services.AddTransient<IDeleteCategory, DeleteCategory>();
             services.AddTransient<IViewProdutos, ViewProdutos>();
             services.AddTransient<IAddProduto, AddProduto>();
+            services.AddTransient<IEditProduto, EditProduto>();
+            services.AddTransient<IGetProdutoById, GetProdutoById>();
+            services.AddTransient<IDeleteProduto, DeleteProduto>();
+            services.AddTransient<IViewProdutosByCategoryId, ViewProdutosByCategoryId>();
+            services.AddTransient<IVenderProduto, VenderProduto>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
