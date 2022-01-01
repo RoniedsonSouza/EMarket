@@ -110,6 +110,20 @@ using Library.UseCaseInterfaces.IProduto;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ITransactions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IEmpresa;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SelectProdutoForSellingComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -137,6 +151,7 @@ using Library.UseCaseInterfaces.IProduto;
         {
             selectedCategoryId = value;
             produtosInCategory = ViewProdutosByCategoryId.Execute(value);
+            OnSelectProduto(null);
             StateHasChanged();
         }
     }
@@ -152,8 +167,9 @@ using Library.UseCaseInterfaces.IProduto;
 
     private void OnSelectProduto(Produto produto)
     {
-        selectedProdutoId = produto.ProdutoId;
         OnProdutoSelected.InvokeAsync(produto);
+        if(produto != null) selectedProdutoId = produto.ProdutoId;
+
     }
 
 

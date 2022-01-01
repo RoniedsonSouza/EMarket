@@ -2,7 +2,7 @@
 @inject IVenderProduto VenderProduto
 
 @if (produtoToSell != null)
- {
+{
     <EditForm Model="produtoToSell" OnValidSubmit="SellProduto">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
@@ -18,20 +18,23 @@
             <label for="quant">Quantidade</label>
             <InputNumber id="quant" class="form-control" @bind-Value="@produtoToSell.Quantidade"></InputNumber>
         </div>
-        <button type="submit" class="btn btn-primary">Vender</button>
+        <button type="submit" class="btn btn-primary button-align">Vender</button>
     </EditForm>
-    <br/>
-    @if (!string.IsNullOrWhiteSpace(errorMessage)) 
+    <br />
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
      {
         <div class="alert alert-danger">@errorMessage</div>
      }
-    
- }
+
+}
 
 @code {
 
     private Produto produtoToSell;
     private string errorMessage;
+
+    [Parameter]
+    public string CaixaNome { get; set; }
 
     [Parameter]
     public Produto SelectedProduto { get; set; }
@@ -54,22 +57,35 @@
                 Preco = SelectedProduto.Preco
             };
         }
+        else
+        {
+            produtoToSell = null;
+        }
     }
 
     private void SellProduto()
     {
+
+        if (string.IsNullOrWhiteSpace(CaixaNome))
+        {
+            errorMessage = "É necessario o nome do caixa para a venda do produto.";
+            return;
+        }
+
         var produto = GetProdutoById.Execute(produtoToSell.ProdutoId);
 
-        if (produtoToSell.Quantidade <= 0) 
+        if (produtoToSell.Quantidade <= 0)
         {
             errorMessage = "Quantidade inválida!";
-
-        } else if (produto.Quantidade >= produtoToSell.Quantidade) {
+        }
+        else if (produto.Quantidade >= produtoToSell.Quantidade)
+        {
             OnProdutoVendido.InvokeAsync(produtoToSell);
             errorMessage = string.Empty;
-            VenderProduto.Execute(produtoToSell.ProdutoId, produtoToSell.Quantidade.Value);
-
-        } else {
+            VenderProduto.Execute(CaixaNome, produtoToSell.ProdutoId, produtoToSell.Name, produtoToSell.Quantidade.Value);
+        }
+        else
+        {
             errorMessage = $"Existem {produto.Quantidade} unidades do produto {produto.Name}. Quantidade de venda insuficiente";
         }
 

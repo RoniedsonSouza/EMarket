@@ -2,6 +2,6 @@
 {
     public interface IVenderProduto
     {
-        void Execute(int produtoId, int QtdVendida);
+        void Execute(string nomeCaixa, int produtoId, string nomeProduto, int QtdVendida);
     }
 }

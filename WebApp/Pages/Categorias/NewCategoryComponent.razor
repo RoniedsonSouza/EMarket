@@ -1,4 +1,6 @@
 ﻿@page "/NovaCategoria"
+@attribute [Authorize(Policy = "Admin")]
+
 @inject NavigationManager NavigationManager
 @inject IAddCategoryUseCase INewCategoryUseCase 
 

@@ -110,6 +110,27 @@ using Library.UseCaseInterfaces.IProduto;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ITransactions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IEmpresa;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\CaixaConsoleComponent.razor"
+           [Authorize(Policy = "Caixa")]
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/caixa_console")]
     public partial class CaixaConsoleComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -119,10 +140,33 @@ using Library.UseCaseInterfaces.IProduto;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 15 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\CaixaConsoleComponent.razor"
+#line 39 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\CaixaConsoleComponent.razor"
        
+    private TodayTransactionsComponent transactionComponent;
 
     private Produto selectedProduto;
+    private string caixaNome;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> _authState { get; set; }
+
+    private AuthenticationState authState;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await _authState;
+        caixaNome = authState.User.Identity.Name;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (firstRender)
+        {
+            transactionComponent.LoadTransactions(caixaNome);
+        }
+    }
 
     private void SelectedProduto(Produto produto)
     {
@@ -131,7 +175,7 @@ using Library.UseCaseInterfaces.IProduto;
 
     private void SellProduto(Produto produto)
     {
-
+        transactionComponent.LoadTransactions(caixaNome);
     }
 
 

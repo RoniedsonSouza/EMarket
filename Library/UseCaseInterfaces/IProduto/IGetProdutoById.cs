@@ -1,4 +1,5 @@
 ﻿using CoreBusiness;
+using System;
 
 namespace Library.UseCaseInterfaces.IProduto
 {

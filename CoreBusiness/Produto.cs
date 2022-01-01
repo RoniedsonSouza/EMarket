@@ -18,5 +18,7 @@ namespace CoreBusiness
         public int? Quantidade { get; set; }
         [Required]
         public double? Preco { get; set; }
+
+        public Category Categoria { get; set; }
     }
 }

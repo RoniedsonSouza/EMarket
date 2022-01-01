@@ -1,0 +1,99 @@
+﻿@page "/transactions"
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IJSRuntime JSRuntime
+@inject IGetTransactions GetTransactions
+
+<div>
+    <div class="row">
+        <div class="col-3">
+            <label for="caixa">Nome do Caixa</label>
+            <input type="text" id="caixa" class="form-control" @bind-value="caixaNome" />
+        </div>
+        <div class="col-3">
+            <label for="dataInicial">Data da Transação</label>
+            <input type="date" id="dataInicial" class="form-control" @bind-value="data" />
+        </div>
+        <div class="col-3">
+            <label for="dataFinal">Até</label>
+            <input type="date" id="dataFinal" class="form-control" @bind-value="dataFinal" />
+        </div>
+        <div class="col-2">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-primary form-control" @onclick="LoadTransactions">Pesquisar</button>
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-primary form-control" @onclick="ImprimirRelatorio">Imprimir</button>
+        </div>
+    </div>
+</div>
+<br />
+
+@if (transactions != null)
+{
+    <div id="imprimirArea">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Dt da Venda</th>
+                    <th>Caixa</th>
+                    <th>Produto</th>
+                    <th>Qtd Anterior</th>
+                    <th>Qtd Vendida</th>
+                    <th>Qtd Atual</th>
+                    <th>Valor da Venda</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tran in transactions)
+                {
+                    <tr>
+                        <td>@tran.DataTransacao.ToString("g")</td>
+                        <td>@tran.NomeCaixa</td>
+                        <td>@tran.NomeProduto</td>
+                        <td>@tran.QtdAnterior</td>
+                        <td>@tran.QuantidadeVendida</td>
+                        <td>@(tran.QtdAnterior - tran.QuantidadeVendida)</td>
+                        <td>@(string.Format("{0:c}", tran.QuantidadeVendida * tran.Preco))</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">&nbsp;</td>
+                    <td>
+                        <b>Total</b>
+                    </td>
+                    <td><b>@(string.Format("{0:c}", transactions.Sum(x => x.Preco * x.QuantidadeVendida)))</b></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}
+
+@code {
+
+    private string caixaNome;
+    private DateTime data;
+    private DateTime dataFinal;
+    private IEnumerable<Transaction> transactions;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        data = DateTime.Today;
+        dataFinal = DateTime.Today;
+    }
+
+    private void LoadTransactions()
+    {
+        transactions = GetTransactions.Execute(caixaNome, data, dataFinal);
+    }
+
+    private void ImprimirRelatorio()
+    {
+        JSRuntime.InvokeVoidAsync("print");
+    }
+}

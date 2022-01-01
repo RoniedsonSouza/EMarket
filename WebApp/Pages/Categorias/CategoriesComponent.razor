@@ -1,13 +1,14 @@
 ﻿@page "/categorias"
+@attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IViewCategoriesUseCase ViewCategoryUseCase
 @inject IDeleteCategory IDeleteCategory
 
 <h3>Categorias</h3>
-
+<br />
 @if (categories != null)
- {
+{
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -18,7 +19,7 @@
         </thead>
         <tbody>
             @foreach (var category in categories)
-             {
+            {
                 <tr>
                     <td>@category.Name</td>
                     <td>@category.Description</td>
@@ -27,12 +28,12 @@
                         <button type="button" class="btn btn-dark" @onclick="@(() => DeleteCategory(category.CategoryId))"><span class="oi oi-trash"></span></button>
                     </td>
                 </tr>
-             }
+            }
         </tbody>
     </table>
- }
-<br/>
-<button type="button" class="btn btn-primary" @onclick="OnClickAddCategory">Nova Categoria</button>
+}
+<br />
+<button type="button" class="btn btn-primary button-align" @onclick="OnClickAddCategory">Nova Categoria</button>
 
 @code {
 

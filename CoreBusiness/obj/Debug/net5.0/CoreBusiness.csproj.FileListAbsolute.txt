@@ -2,6 +2,7 @@ D:\CODIGOS\Ecommerce\CoreBusiness\bin\Debug\net5.0\CoreBusiness.deps.json
 D:\CODIGOS\Ecommerce\CoreBusiness\bin\Debug\net5.0\CoreBusiness.dll
 D:\CODIGOS\Ecommerce\CoreBusiness\bin\Debug\net5.0\ref\CoreBusiness.dll
 D:\CODIGOS\Ecommerce\CoreBusiness\bin\Debug\net5.0\CoreBusiness.pdb
+D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.csprojAssemblyReference.cache
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.GeneratedMSBuildEditorConfig.editorconfig
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.AssemblyInfoInputs.cache
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.AssemblyInfo.cs

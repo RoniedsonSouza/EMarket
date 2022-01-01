@@ -1,5 +1,5 @@
 ﻿using CoreBusiness;
-using Library.DataStorePluginInterfaces;
+using Library.PluginInterfaces;
 using Library.UseCaseInterfaces.ICategory;
 
 namespace Library.Categoria.Commands

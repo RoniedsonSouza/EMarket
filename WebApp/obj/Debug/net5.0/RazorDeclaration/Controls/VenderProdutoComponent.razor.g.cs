@@ -110,6 +110,20 @@ using Library.UseCaseInterfaces.IProduto;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ITransactions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IEmpresa;
+
+#line default
+#line hidden
+#nullable disable
     public partial class VenderProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -123,6 +137,9 @@ using Library.UseCaseInterfaces.IProduto;
 
     private Produto produtoToSell;
     private string errorMessage;
+
+    [Parameter]
+    public string CaixaNome { get; set; }
 
     [Parameter]
     public Produto SelectedProduto { get; set; }
@@ -145,22 +162,35 @@ using Library.UseCaseInterfaces.IProduto;
                 Preco = SelectedProduto.Preco
             };
         }
+        else
+        {
+            produtoToSell = null;
+        }
     }
 
     private void SellProduto()
     {
+
+        if (string.IsNullOrWhiteSpace(CaixaNome))
+        {
+            errorMessage = "É necessario o nome do caixa para a venda do produto.";
+            return;
+        }
+
         var produto = GetProdutoById.Execute(produtoToSell.ProdutoId);
 
-        if (produtoToSell.Quantidade <= 0) 
+        if (produtoToSell.Quantidade <= 0)
         {
             errorMessage = "Quantidade inválida!";
-
-        } else if (produto.Quantidade >= produtoToSell.Quantidade) {
+        }
+        else if (produto.Quantidade >= produtoToSell.Quantidade)
+        {
             OnProdutoVendido.InvokeAsync(produtoToSell);
             errorMessage = string.Empty;
-            VenderProduto.Execute(produtoToSell.ProdutoId, produtoToSell.Quantidade.Value);
-
-        } else {
+            VenderProduto.Execute(CaixaNome, produtoToSell.ProdutoId, produtoToSell.Name, produtoToSell.Quantidade.Value);
+        }
+        else
+        {
             errorMessage = $"Existem {produto.Quantidade} unidades do produto {produto.Name}. Quantidade de venda insuficiente";
         }
 

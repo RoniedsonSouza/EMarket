@@ -110,6 +110,27 @@ using Library.UseCaseInterfaces.IProduto;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ITransactions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IEmpresa;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
+           [Authorize(Policy = "Admin")]
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/editarproduto/{produtoId}")]
     public partial class EditProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -139,7 +160,8 @@ using Library.UseCaseInterfaces.IProduto;
         if (int.TryParse(this.ProdutoId, out int iProdutoId))
         {
             var prod = GetProdutoById.Execute(iProdutoId);
-            this.produto = new Produto {
+            this.produto = new Produto
+            {
                 ProdutoId = prod.ProdutoId,
                 Name = prod.Name,
                 CategoryId = prod.CategoryId,

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.DataStorePluginInterfaces
+namespace Library.PluginInterfaces
 {
     public interface ICategoryRepository
     {

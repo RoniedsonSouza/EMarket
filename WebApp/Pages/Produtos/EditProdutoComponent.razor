@@ -1,12 +1,12 @@
 ﻿@page "/editarproduto/{produtoId}"
+@attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IAddProduto IAddProduto
 @inject IGetCategoryById GetCategoryById
-@inject IGetProdutoById GetProdutoById 
+@inject IGetProdutoById GetProdutoById
 @inject IEditProduto EditProduto
 @inject IViewCategoriesUseCase ViewCategoriesUseCase
-
 
 <h3>Editar Produto</h3>
 <br />
@@ -68,7 +68,8 @@
         if (int.TryParse(this.ProdutoId, out int iProdutoId))
         {
             var prod = GetProdutoById.Execute(iProdutoId);
-            this.produto = new Produto {
+            this.produto = new Produto
+            {
                 ProdutoId = prod.ProdutoId,
                 Name = prod.Name,
                 CategoryId = prod.CategoryId,

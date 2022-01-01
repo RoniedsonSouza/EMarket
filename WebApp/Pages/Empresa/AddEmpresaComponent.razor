@@ -1,0 +1,119 @@
+﻿@page "/adicionar-empresa"
+@attribute [Authorize(Policy = "Admin")]
+
+@inject NavigationManager NavigationManager
+@inject IAddEmpresa AddEmpresa
+
+<h3>Empresa</h3>
+
+@if (empresa != null)
+{
+    <EditForm Model="empresa" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="card mt-2">
+            <div class="card-header">Informações Básicas</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input id="name" type="text" class="form-control" @bind-value="empresa.Nome" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="cnpj">CNPJ</label>
+                            <input id="cnpj" type="text" @bind-value="empresa.CNPJ" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="tel">Telefone</label>
+                            <input id="tel" type="text" @bind-value="empresa.Telefone" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="cel">Celular</label>
+                            <input id="cel" type="text" @bind-value="empresa.Celular" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card">
+            <div class="card-header">Endereço</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="end">Endereço</label>
+                            <input id="end" type="text" @bind-value="empresa.Endereco" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+                            <input id="cidade" type="text" @bind-value="empresa.Cidade" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input id="estado" type="text" @bind-value="empresa.Estado" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="pais">País</label>
+                            <input id="pais" type="text" @bind-value="empresa.Pais" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card">
+            <div class="card-header">Informações Adicionais</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="sobre">Sobre</label>
+                    <input id="sobre" type="text" @bind-value="empresa.Sobre" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancelar</button>
+    </EditForm>
+    <br />
+}
+@code {
+
+    private Empresa empresa;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        empresa = new Empresa();
+    }
+
+    private void OnValidSubmit()
+    {
+        AddEmpresa.Execute(empresa);
+        NavigationManager.NavigateTo("/empresa");
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/empresa");
+    }
+
+}

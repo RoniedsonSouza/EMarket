@@ -1,4 +1,5 @@
 ﻿@page "/NovoProduto"
+@attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IAddProduto IAddProduto
@@ -6,7 +7,7 @@
 @inject IViewCategoriesUseCase ViewCategories
 
 <h3>Novo Produto</h3>
-<br/>
+<br />
 @if (produto != null)
 {
 
@@ -20,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            <label for="category">Descrição</label>
+            <label for="category">Categoria</label>
             <select id="category" @bind="produto.CategoryId" class="form-control">
                 <option selected></option>
                 @foreach (var cat in categories)
@@ -36,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <label for="preco">Quantidade</label>
+            <label for="preco">Preço</label>
             <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
         </div>
 

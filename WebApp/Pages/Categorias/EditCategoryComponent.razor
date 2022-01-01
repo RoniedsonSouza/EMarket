@@ -1,13 +1,15 @@
 ﻿@page "/editarcategoria/{categoryId}"
+@attribute [Authorize(Policy = "Admin")]
+
 @inject NavigationManager NavigationManager
 @inject IAddCategoryUseCase INewCategoryUseCase
 @inject IGetCategoryById GetCategoryById
 @inject IEditCategory EditCategory
 
 <h3>Editar Categoria</h3>
-<br/>
+<br />
 @if (category != null)
-{
+ {
 
     <EditForm Model="category" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -21,12 +23,12 @@
             <label for="descript">Descrição</label>
             <InputText id="descript" @bind-Value="category.Description" class="form-control"></InputText>
         </div>
-
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancelar</button>
+        <div class="button-align-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancelar</button>
+        </div>
     </EditForm>
-
-}
+ }
 
 @code {
     [Parameter]
@@ -43,7 +45,7 @@
     {
         base.OnParametersSet();
 
-        if(int.TryParse(this.CategoryId, out int iCategoryId))
+        if (int.TryParse(this.CategoryId, out int iCategoryId))
         {
             var cat = GetCategoryById.Execute(iCategoryId);
             this.category = new Category { CategoryId = cat.CategoryId, Name = cat.Name, Description = cat.Description };

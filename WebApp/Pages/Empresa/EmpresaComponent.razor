@@ -1,0 +1,135 @@
+﻿@page "/empresa"
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IViewEmpresa ViewEmpresa
+@inject NavigationManager NavigationManager
+@inject IGetEmpresaById GetEmpresaById
+
+<h3>Empresa</h3>
+<br />
+@if (empresa == null)
+{
+    <button type="button" class="btn btn-primary" @onclick="OnClickAddEmpresa">Cadastrar</button>
+}
+<div class="card mt-2">
+    <div class="card-header">Informações Básicas</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input id="name" type="text" class="form-control" disabled value="@empresa?.Nome" />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="cnpj">CNPJ</label>
+                    <input id="cnpj" type="text" value="@empresa?.CNPJ" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="tel">Telefone</label>
+                    <input id="tel" type="text" value="@empresa?.Telefone" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="cel">Celular</label>
+                    <input id="cel" type="text" value="@empresa?.Celular" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="card">
+    <div class="card-header">Endereço</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="end">Endereço</label>
+                    <input id="end" type="text" value="@empresa?.Endereco" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" type="text" value="@empresa?.Cidade" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input id="estado" type="text" value="@empresa?.Estado" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="pais">País</label>
+                    <input id="pais" type="text" value="@empresa?.Pais" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="card">
+    <div class="card-header">Informações Adicionais</div>
+    <div class="card-body">
+        <div class="form-group">
+            <label for="sobre">Sobre</label>
+            <textarea id="sobre" type="text" value="@empresa?.Sobre" disabled class="form-control" />
+        </div>
+    </div>
+</div>
+<br/>
+@if (empresa != null)
+ {
+    <button type="button" class="btn btn-info button-align" @onclick="@(() => OnEditEmpresa(empresa))">Editar</button>
+ }
+<br/>
+
+
+@code {
+    private CoreBusiness.Empresa empresa;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var empr = GetEmpresaById.Execute(1);
+        if (empr != null)
+        {
+            this.empresa = new Empresa
+            {
+                EmpresaId = empr.EmpresaId,
+                Nome = empr.Nome,
+                CNPJ = empr.CNPJ,
+                Telefone = empr.Telefone,
+                Celular = empr.Celular,
+                Endereco = empr.Endereco,
+                Cidade = empr.Cidade,
+                Estado = empr.Estado,
+                Pais = empr.Pais,
+                Sobre = empr.Sobre
+            };
+        }
+
+    }
+
+    private void OnClickAddEmpresa()
+    {
+        NavigationManager.NavigateTo("/adicionar-empresa");
+    }
+
+    private void OnEditEmpresa(Empresa empresa)
+    {
+        NavigationManager.NavigateTo($"/editar-empresa/{empresa.EmpresaId}");
+    }
+}

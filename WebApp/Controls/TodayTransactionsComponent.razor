@@ -1,0 +1,44 @@
+﻿@inject IGetTodayTransactions GetTodayTransactions
+
+@if (transactions != null)
+{
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th>Caixa</th>
+                <th>Produto</th>
+                <th>Dt da Venda</th>
+                <th>Qtd Anterior</th>
+                <th>Qtd Vendida</th>
+                <th>Qtd Atual</th>
+                <th>Valor da Venda</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var tran in transactions)
+            {
+                <tr>
+                    <td>@tran.NomeCaixa</td>
+                    <td>@tran.NomeProduto</td>
+                    <td>@tran.DataTransacao.ToString("g")</td>
+                    <td>@tran.QtdAnterior</td>
+                    <td>@tran.QuantidadeVendida</td>
+                    <td>@(tran.QtdAnterior - tran.QuantidadeVendida)</td>
+                    <td>@(string.Format("{0:c}", tran.QuantidadeVendida * tran.Preco))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private IEnumerable<Transaction> transactions;
+
+    public void LoadTransactions(string caixaNome)
+    {
+        transactions = GetTodayTransactions.Execute(caixaNome);
+        StateHasChanged();
+    }
+
+}

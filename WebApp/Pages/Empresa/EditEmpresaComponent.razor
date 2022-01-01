@@ -1,0 +1,143 @@
+﻿@page "/editar-empresa/{EmpresaId}"
+@attribute [Authorize(Policy = "Admin")]
+
+@inject NavigationManager NavigationManager
+@inject IViewEmpresa ViewEmpresa
+@inject IGetEmpresaById GetEmpresaById
+@inject IEditEmpresa EditEmpresa
+
+<h3>Editar Empresa</h3>
+
+<EditForm Model="empresa" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div class="card mt-2">
+        <div class="card-header">Informações Básicas</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input id="name" type="text" class="form-control" @bind-value="empresa.Nome" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="cnpj">CNPJ</label>
+                        <input id="cnpj" type="text" @bind-value="empresa.CNPJ" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="tel">Telefone</label>
+                        <input id="tel" type="text" @bind-value="empresa.Telefone" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="cel">Celular</label>
+                        <input id="cel" type="text" @bind-value="empresa.Celular" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">Endereço</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="end">Endereço</label>
+                        <input id="end" type="text" @bind-value="empresa.Endereco" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="cidade">Cidade</label>
+                        <input id="cidade" type="text" @bind-value="empresa.Cidade" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <input id="estado" type="text" @bind-value="empresa.Estado" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="pais">País</label>
+                        <input id="pais" type="text" @bind-value="empresa.Pais" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">Informações Adicionais</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="sobre">Sobre</label>
+                <input id="sobre" type="text" @bind-value="empresa.Sobre" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="button-align-2">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancelar</button>
+    </div>
+</EditForm>
+<br />
+
+@code {
+    [Parameter]
+    public string EmpresaId { get; set; }
+
+    private Empresa empresa;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (int.TryParse(this.EmpresaId, out int iEmpresaId))
+        {
+            var empr = GetEmpresaById.Execute(iEmpresaId);
+            this.empresa = new Empresa
+            {
+                EmpresaId = empr.EmpresaId,
+                Nome = empr.Nome,
+                CNPJ = empr.CNPJ,
+                Telefone = empr.Telefone,
+                Celular = empr.Celular,
+                Endereco = empr.Endereco,
+                Cidade = empr.Cidade,
+                Estado = empr.Estado,
+                Pais = empr.Pais,
+                Sobre = empr.Sobre
+            };
+        }
+    }
+
+    private void OnValidSubmit()
+    {
+        EditEmpresa.Execute(this.empresa);
+        NavigationManager.NavigateTo("/empresa");
+    }
+
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/empresa");
+    }
+}

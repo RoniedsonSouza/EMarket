@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreBusiness
@@ -10,5 +11,6 @@ namespace CoreBusiness
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public List<Produto> Produtos { get; set; }
     }
 }

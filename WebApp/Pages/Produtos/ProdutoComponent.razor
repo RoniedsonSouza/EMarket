@@ -1,4 +1,5 @@
 ﻿@page "/produtos"
+@attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IViewProdutos ViewProdutos
@@ -8,36 +9,36 @@
 <h3>Produtos</h3>
 <br />
 @if (produtos != null)
- {
-     <table class="table table-bordered">
-         <thead>
-             <tr>
-                 <th>Categoria</th>
-                 <th>Nome</th>
-                 <th>Quantidade</th>
-                 <th>Preço</th>
-                 <th></th>
-             </tr>
-         </thead>
-         <tbody>
-             @foreach (var product in produtos)
-             {
-                 <tr>
-                     <td>@GetCategoryById.Execute(product.CategoryId.Value)?.Name</td>
-                     <td>@product.Name</td>
-                     <td>@product.Quantidade</td>
-                     <td>@(Math.Round(product.Preco.Value, 2))</td>
-                     <td>
-                         <button type="button" class="btn btn-light" @onclick="@(() => OnEditProduto(product))"><span class="oi oi-pencil"></span></button>
-                         <button type="button" class="btn btn-dark" @onclick="@(() => OnDeleteProduto(product.ProdutoId))"><span class="oi oi-trash"></span></button>
-                     </td>
-                 </tr>
-             }
-         </tbody>
-     </table>
- }
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in produtos)
+            {
+                <tr>
+                    <td>@GetCategoryById.Execute(product.CategoryId.Value)?.Name</td>
+                    <td>@product.Name</td>
+                    <td>@product.Quantidade</td>
+                    <td>@(Math.Round(product.Preco.Value, 2))</td>
+                    <td>
+                        <button type="button" class="btn btn-light" @onclick="@(() => OnEditProduto(product))"><span class="oi oi-pencil"></span></button>
+                        <button type="button" class="btn btn-dark" @onclick="@(() => OnDeleteProduto(product.ProdutoId))"><span class="oi oi-trash"></span></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 <br />
-<button type="button" class="btn btn-primary" @onclick="OnClickAddProduto">Novo Produto</button>
+<button type="button" class="btn btn-primary button-align" @onclick="OnClickAddProduto">Novo Produto</button>
 
 @code {
 

@@ -7,7 +7,6 @@ namespace Library.Produtos.Commands
     public class AddProduto : IAddProduto
     {
         private readonly IProdutoRepository produtoRepository;
-
         public AddProduto(IProdutoRepository produtoRepository)
         {
             this.produtoRepository = produtoRepository;

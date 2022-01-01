@@ -110,6 +110,27 @@ using Library.UseCaseInterfaces.IProduto;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ITransactions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IEmpresa;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\NewCategoryComponent.razor"
+           [Authorize(Policy = "Admin")]
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/NovaCategoria")]
     public partial class NewCategoryComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -119,7 +140,7 @@ using Library.UseCaseInterfaces.IProduto;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 29 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\NewCategoryComponent.razor"
+#line 31 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\NewCategoryComponent.razor"
        
 
     private Category category;

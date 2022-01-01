@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        <div class="dropdown-user">
+            
+            <a href="Identity/Account/Manage"><span class="oi oi-person" style="padding-right: 12px;"></span>@context.User.Identity.Name</a>
+        </div>
+        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+            <button id="sair" type="submit" class="btn btn-danger">
+                <span class="oi oi-power-standby"></span>
+            </button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Identity/Account/Register">Cadastrar</a>
+        <a href="Identity/Account/Login">Entrar</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+}

@@ -110,6 +110,27 @@ using Library.UseCaseInterfaces.IProduto;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.ITransactions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Library.UseCaseInterfaces.IEmpresa;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\EditCategoryComponent.razor"
+           [Authorize(Policy = "Admin")]
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/editarcategoria/{categoryId}")]
     public partial class EditCategoryComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -119,7 +140,7 @@ using Library.UseCaseInterfaces.IProduto;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\EditCategoryComponent.razor"
+#line 33 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\EditCategoryComponent.razor"
        
     [Parameter]
     public string CategoryId { get; set; }
@@ -135,7 +156,7 @@ using Library.UseCaseInterfaces.IProduto;
     {
         base.OnParametersSet();
 
-        if(int.TryParse(this.CategoryId, out int iCategoryId))
+        if (int.TryParse(this.CategoryId, out int iCategoryId))
         {
             var cat = GetCategoryById.Execute(iCategoryId);
             this.category = new Category { CategoryId = cat.CategoryId, Name = cat.Name, Description = cat.Description };
