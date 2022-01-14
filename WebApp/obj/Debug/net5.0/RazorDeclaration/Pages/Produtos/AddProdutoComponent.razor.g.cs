@@ -125,13 +125,20 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/NovoProduto")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/produtos/NovoProduto")]
     public partial class AddProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

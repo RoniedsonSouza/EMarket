@@ -124,6 +124,13 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -132,10 +139,23 @@ using Library.UseCaseInterfaces.IEmpresa;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 196 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
+#line 95 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
        
-    private bool collapseNavMenu = true;
+    [Parameter]
+    public int PageNumber { get; set; }
 
+    private async void TesteClick()
+    {
+        var url = Navigation.Uri.Split('/');
+        await JsRuntime.InvokeVoidAsync("console.log", url[3]);
+
+        //PopUp
+        //bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+    }
+
+
+
+    private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
@@ -146,6 +166,8 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager Navigation { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JsRuntime { get; set; }
     }
 }
 #pragma warning restore 1591

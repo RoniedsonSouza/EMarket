@@ -124,6 +124,13 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -131,6 +138,7 @@ using Library.UseCaseInterfaces.IEmpresa;
         {
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
     }
 }
 #pragma warning restore 1591

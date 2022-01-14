@@ -125,13 +125,20 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/produtos")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/produtos/{PageNumber:int}")]
     public partial class ProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -140,21 +147,28 @@ using Library.UseCaseInterfaces.IEmpresa;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 43 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
+#line 67 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
        
+    [Parameter]
+    public int PageNumber { get; set; }
 
-    private IEnumerable<CoreBusiness.Produto> produtos;
+    private IPagedList<CoreBusiness.Produto> produtos;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        produtos = ProdutosToPaged.Execute(PageNumber, 7);
+    }
 
-        produtos = ViewProdutos.Execute();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PageNumber < 1) PageNumber = 1;
+        produtos = ProdutosToPaged.Execute(PageNumber, 7);
     }
 
     private void OnClickAddProduto()
     {
-        NavigationManager.NavigateTo("/NovoProduto");
+        NavigationManager.NavigateTo("/produtos/NovoProduto");
     }
 
     private void OnEditProduto(Produto produto)
@@ -170,6 +184,7 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetProdutosToPaged ProdutosToPaged { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDeleteProduto DeleteProduto { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewProdutos ViewProdutos { get; set; }

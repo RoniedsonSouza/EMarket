@@ -125,6 +125,13 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
@@ -140,7 +147,7 @@ using Library.UseCaseInterfaces.IEmpresa;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 52 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
+#line 53 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
        
     [Parameter]
     public string ProdutoId { get; set; }

@@ -125,13 +125,20 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\TransactionsComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/transactions")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/transacoes")]
     public partial class TransactionsComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -140,7 +147,7 @@ using Library.UseCaseInterfaces.IEmpresa;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 75 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\TransactionsComponent.razor"
+#line 80 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\TransactionsComponent.razor"
        
 
     private string caixaNome;

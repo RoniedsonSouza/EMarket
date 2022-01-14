@@ -121,6 +121,13 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SelectProdutoForSellingComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

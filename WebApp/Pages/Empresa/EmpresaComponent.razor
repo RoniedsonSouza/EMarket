@@ -9,7 +9,7 @@
 <br />
 @if (empresa == null)
 {
-    <button type="button" class="btn btn-primary" @onclick="OnClickAddEmpresa">Cadastrar</button>
+    <button type="button" class="btn bg-gradient-info" @onclick="OnClickAddEmpresa">Cadastrar</button>
 }
 <div class="card mt-2">
     <div class="card-header">Informações Básicas</div>
@@ -91,11 +91,12 @@
 <br/>
 @if (empresa != null)
  {
-    <button type="button" class="btn btn-info button-align" @onclick="@(() => OnEditEmpresa(empresa))">Editar</button>
+    <button type="button" class="btn bg-gradient-light button-align" @onclick="@(() => OnEditEmpresa(empresa))">Editar</button>
  }
 <br/>
-
-
+<br />
+<br />
+<br />
 @code {
     private CoreBusiness.Empresa empresa;
 

@@ -8,10 +8,19 @@
     ".NETCoreApp,Version=v5.0": {
       "Library/1.0.0": {
         "dependencies": {
-          "CoreBusiness": "1.0.0"
+          "CoreBusiness": "1.0.0",
+          "PagedList": "1.17.0"
         },
         "runtime": {
           "Library.dll": {}
+        }
+      },
+      "PagedList/1.17.0": {
+        "runtime": {
+          "lib/net40/PagedList.dll": {
+            "assemblyVersion": "1.17.0.0",
+            "fileVersion": "1.17.0.0"
+          }
         }
       },
       "CoreBusiness/1.0.0": {
@@ -26,6 +35,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "PagedList/1.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ou6F3WKXh49hOo0TxWM+SkIGuKllYPuPPvnSYOlQ1sTrtuEyuDUhYbSJd5Sdb06i/sWUJZTjiUecEs3Ht/Hx3g==",
+      "path": "pagedlist/1.17.0",
+      "hashPath": "pagedlist.1.17.0.nupkg.sha512"
     },
     "CoreBusiness/1.0.0": {
       "type": "project",

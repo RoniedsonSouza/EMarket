@@ -1,5 +1,6 @@
 ﻿using CoreBusiness;
 using Library.PluginInterfaces;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,11 @@ namespace DataStore
         public IEnumerable<Produto> GetProdutosByCategoryId(int categoryId)
         {
             return produtos.Where(x => x.CategoryId == categoryId);
+        }
+
+        public IPagedList<Produto> GetProdutosToPaged(int page, int qtdPorPage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

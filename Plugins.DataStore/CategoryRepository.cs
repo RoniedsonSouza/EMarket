@@ -1,5 +1,6 @@
 ﻿using CoreBusiness;
 using Library.PluginInterfaces;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,11 @@ namespace Plugins.DataStore
         public IEnumerable<Category> GetCategories()
         {
             return context.Categorias.ToList();
+        }
+
+        public IPagedList<Category> GetCategoriesAsync(int pagina, int qtdPorPagina) 
+        {
+            return context.Categorias.ToPagedList(pagina, qtdPorPagina);
         }
 
         public Category GetCategoryById(int categoryId)

@@ -1,4 +1,4 @@
-﻿@page "/NovoProduto"
+﻿@page "/produtos/NovoProduto"
 @attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
@@ -41,8 +41,8 @@
             <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
         </div>
 
-        <button type="submit" class="btn btn-primary">Adicionar</button>
-        <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancelar</button>
+        <button type="submit" class="btn bg-gradient-info">Adicionar</button>
+        <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
     </EditForm>
 
 }

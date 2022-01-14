@@ -1,5 +1,9 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+tbody tr td{
+    vertical-align:middle !important;
+}
+
 .toast {
     display: none;
     padding: 1.5rem;
@@ -12,30 +16,30 @@
     left: 50%;
 }
 
-    .toast-icon {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0 1rem;
-        font-size: 2.5rem;
+.toast-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 1rem;
+    font-size: 2.5rem;
+}
+
+.toast-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-left: 1rem;
+}
+
+    .toast-body p {
+        margin-bottom: 0;
     }
 
-    .toast-body {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        padding-left: 1rem;
-    }
-
-        .toast-body p {
-            margin-bottom: 0;
-        }
-
-    .toast-visible {
-        display: flex;
-        flex-direction: row;
-        animation: fadein 1.5s;
-    }
+.toast-visible {
+    display: flex;
+    flex-direction: row;
+    animation: fadein 1.5s;
+}
 
 @keyframes fadein {
     from {
@@ -96,7 +100,7 @@ a, .btn-link {
         top: 0.5rem;
     }
 
-@media print{
+@media print {
     body * {
         visibility: hidden;
     }
@@ -105,7 +109,7 @@ a, .btn-link {
         visibility: visible;
     }
 
-    #imprimirArea{
+    #imprimirArea {
         position: absolute;
         left: 0;
         top: 0;
@@ -130,8 +134,8 @@ a, .btn-link {
     cursor: pointer;
 }
 
-    /* Dropdown button on hover & focus */
-    /*.dropbtn:hover, .dropbtn:focus {
+/* Dropdown button on hover & focus */
+/*.dropbtn:hover, .dropbtn:focus {
         background-color: #2980B9;
     }*/
 
@@ -171,7 +175,7 @@ a, .btn-link {
     display: block;
 }
 
-.dropdown-user{
+.dropdown-user {
     display: flex;
     align-items: baseline;
 }
@@ -188,4 +192,27 @@ a, .btn-link {
     height: 3.5rem;
     display: flex;
     align-items: center;
+}
+
+aside::-webkit-scrollbar {
+    width: 12px; /* width of the entire scrollbar */
+}
+
+aside::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid white;
+    background-color: transparent;
+}
+
+aside:hover::-webkit-scrollbar-thumb {
+    background-color: #999;
+    opacity: 0.9;
+}
+
+.navbar-nav span {
+    color: #3A416F;
+}
+
+.nav-link.active > .icon > span{
+    color: white;
 }

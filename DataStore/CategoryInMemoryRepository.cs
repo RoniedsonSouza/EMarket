@@ -1,8 +1,10 @@
 ﻿using CoreBusiness;
 using Library.PluginInterfaces;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataStore
 {
@@ -59,6 +61,11 @@ namespace DataStore
         public void DeleteCategory(int categoryId)
         {
             categories?.Remove(GetCategoryById(categoryId));
+        }
+
+        public IPagedList<Category> GetCategoriesAsync(int pagina, int qtdPorPagina)
+        {
+            throw new NotImplementedException();
         }
     }
 }

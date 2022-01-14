@@ -118,6 +118,13 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "D:\CODIGOS\Ecommerce\WebApp\Shared\LoginComponent.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 

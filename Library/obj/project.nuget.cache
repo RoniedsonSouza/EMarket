@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "ciCHECNRepNP137RcRze1DP4JcNFvBw2adEFlA2dlwlsbEMYxX/HNg6mSZtlk13zyC5ETgGUgkV050iGeX51bg==",
+  "dgSpecHash": "r7vRi5rEuHYdEUEIZtd5f8V3zB2lhFsitNEa+OtSruY5y4Y4sXrFmgX6LHuSB43G8fINiPpGaMUb1y1mrtPJkQ==",
   "success": true,
   "projectFilePath": "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\ronie\\.nuget\\packages\\pagedlist\\1.17.0\\pagedlist.1.17.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PagedList 1.17.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PagedList",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }

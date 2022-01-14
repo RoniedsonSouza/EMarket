@@ -125,13 +125,20 @@ using Library.UseCaseInterfaces.IEmpresa;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using PagedList;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/categorias")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/categorias/{PageNumber:int}")]
     public partial class CategoriesComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -140,15 +147,23 @@ using Library.UseCaseInterfaces.IEmpresa;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 38 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
+#line 62 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
        
+    [Parameter]
+    public int PageNumber { get; set; } = 1;
 
-    private List<Category> categories;
+    private IPagedList<Category> categories;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        LoadCategories();
+        LoadCategories(PageNumber);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PageNumber < 1) PageNumber = 1;
+        categories = GetCategories.Execute(PageNumber, 7);
     }
 
     private void OnClickAddCategory()
@@ -164,17 +179,18 @@ using Library.UseCaseInterfaces.IEmpresa;
     private void DeleteCategory(int categoryId)
     {
         IDeleteCategory.Delete(categoryId);
-        LoadCategories();
+        LoadCategories(PageNumber);
     }
 
-    private void LoadCategories()
+    private void LoadCategories(int page)
     {
-        categories = ViewCategoryUseCase.Execute()?.ToList();
+        categories = GetCategories.Execute(page, 7);
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategories GetCategories { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDeleteCategory IDeleteCategory { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewCategoriesUseCase ViewCategoryUseCase { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
