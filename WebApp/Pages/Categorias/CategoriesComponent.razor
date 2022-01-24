@@ -1,6 +1,7 @@
 ﻿@page "/categorias/{PageNumber:int}"
 @attribute [Authorize(Policy = "Admin")]
 
+@inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 @inject IViewCategoriesUseCase ViewCategoryUseCase
 @inject IDeleteCategory IDeleteCategory
@@ -25,7 +26,7 @@
                     <td>@category.Name</td>
                     <td>@category.Description</td>
                     <td>
-                        <button type="button" class="btn btn-link text-danger px-3 mb-0" @onclick="@(() => DeleteCategory(category.CategoryId))">
+                        <button type="button" class="btn btn-link text-danger px-3 mb-0" @onclick="@(() => DeleteCategory(category.CategoryId, category.Name))">
                             <span class="oi oi-trash" aria-hidden="true"></span>
                             Excluir
                         </button>
@@ -38,43 +39,55 @@
             }
         </tbody>
     </table>
-    <div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                @for (int i = 1; i <= 5; i++)
-                {
-                    @if (i == PageNumber)
+    if (paginas > 7)
+    {
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= maximoPaginas; i++)
                     {
-                        <li class="page-item disabled"><a class="page-link" href="categorias/@i">@i</a></li>
+                        @if (i == PageNumber)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="categorias/@i">@i</a></li>
+                        }
+                        else if (i != PageNumber)
+                        {
+                            <li class="page-item"><a class="page-link" href="categorias/@i">@i</a></li>
+                        }
                     }
-                    else if (i != PageNumber)
-                    {
-                        <li class="page-item"><a class="page-link" href="categorias/@i">@i</a></li>
-                    }
-                }
-            </ul>
-        </nav>
-    </div>
+                </ul>
+            </nav>
+        </div>
+    }
 }
 <br />
 <button type="button" class="btn bg-gradient-info button-align" @onclick="OnClickAddCategory">Nova Categoria</button>
-<br/>
+<br />
+
 @code {
     [Parameter]
-    public int PageNumber { get; set; } = 1;
+    public int PageNumber { get; set; }
 
     private IPagedList<Category> categories;
+    public decimal paginas { get; set; }
+    public int maximoPaginas { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         LoadCategories(PageNumber);
+
+        paginas = GetCategories.ExecuteResult().Count();
+        maximoPaginas = (int)Math.Ceiling(paginas / 7);
     }
 
     protected override async Task OnParametersSetAsync()
     {
         if (PageNumber < 1) PageNumber = 1;
+
         categories = GetCategories.Execute(PageNumber, 7);
+        paginas = GetCategories.ExecuteResult().Count();
+        maximoPaginas = (int)Math.Ceiling(paginas / 7);
     }
 
     private void OnClickAddCategory()
@@ -87,10 +100,16 @@
         NavigationManager.NavigateTo($"/editarcategoria/{category.CategoryId}");
     }
 
-    private void DeleteCategory(int categoryId)
+    private async Task DeleteCategory(int categoryId, string nome)
     {
-        IDeleteCategory.Delete(categoryId);
-        LoadCategories(PageNumber);
+        //PopUp
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Tem certeza que deseja excluir a categoria " + nome + "?");
+        if (confirmed)
+        {
+            IDeleteCategory.Delete(categoryId);
+            LoadCategories(PageNumber);
+        }
+
     }
 
     private void LoadCategories(int page)

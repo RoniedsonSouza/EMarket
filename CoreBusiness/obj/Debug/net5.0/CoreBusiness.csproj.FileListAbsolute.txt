@@ -9,3 +9,4 @@ D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.csproj.CoreCompi
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.dll
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\ref\CoreBusiness.dll
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.pdb
+D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.csprojAssemblyReference.cache

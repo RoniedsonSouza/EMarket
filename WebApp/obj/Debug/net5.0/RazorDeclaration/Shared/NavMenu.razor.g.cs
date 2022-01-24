@@ -142,18 +142,18 @@ using PagedList;
 #line 95 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
        
     [Parameter]
-    public int PageNumber { get; set; }
+    public int PageNumber { get; set; } = 1;
 
-    private async void TesteClick()
+    private string RoteRedirect(string rote)
     {
         var url = Navigation.Uri.Split('/');
-        await JsRuntime.InvokeVoidAsync("console.log", url[3]);
+        url[3] = "";
+        PageNumber = 1;
+        var chamada = url[3] + rote + "/" + PageNumber.ToString();
+        return chamada;
 
-        //PopUp
-        //bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        //JsRuntime.InvokeVoidAsync("console.log", rote);
     }
-
-
 
     private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;

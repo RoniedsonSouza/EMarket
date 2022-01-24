@@ -1,6 +1,7 @@
 ﻿@page "/produtos/{PageNumber:int}"
 @attribute [Authorize(Policy = "Admin")]
 
+@inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 @inject IViewProdutos ViewProdutos
 @inject IGetCategoryById GetCategoryById
@@ -14,6 +15,7 @@
     <table id="produtos" class="table table-bordered">
         <thead>
             <tr>
+                <th>Código</th>
                 <th>Categoria</th>
                 <th>Nome</th>
                 <th>Quantidade</th>
@@ -22,15 +24,19 @@
             </tr>
         </thead>
         <tbody>
+            @if(produtos.Count() == 0){
+                <tr><td class="text-center" colspan="5">Nenhum produto registrado.</td></tr>
+            }
             @foreach (var product in produtos)
             {
                 <tr>
+                    <td>@product.ProdutoId</td>
                     <td>@GetCategoryById.Execute(product.CategoryId.Value)?.Name</td>
                     <td>@product.Name</td>
                     <td>@product.Quantidade</td>
                     <td>@(string.Format("{0:c}", Math.Round(product.Preco.Value, 2)))</td>
                     <td>
-                        <button type="button" class="btn btn-link text-danger px-3 mb-0" @onclick="@(() => OnDeleteProduto(product.ProdutoId))">
+                        <button type="button" class="btn btn-link text-danger px-3 mb-0" @onclick="@(() => OnDeleteProduto(product.ProdutoId, product.Name))">
                             <span class="oi oi-trash"></span>
                             Excluir
                         </button>
@@ -43,43 +49,55 @@
             }
         </tbody>
     </table>
-    <div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                @for (int i = 1; i <= 5; i++)
-                {
-                    @if (i == PageNumber)
+    if (produtosAll > 7)
+    {
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= 5; i++)
                     {
-                        <li class="page-item disabled"><a class="page-link" href="produtos/@i">@i</a></li>
+                        @if (i == PageNumber)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="produtos/@i">@i</a></li>
+                        }
+                        else if (i != PageNumber)
+                        {
+                            <li class="page-item"><a class="page-link" href="produtos/@i">@i</a></li>
+                        }
                     }
-                    else if (i != PageNumber)
-                    {
-                        <li class="page-item"><a class="page-link" href="produtos/@i">@i</a></li>
-                    }
-                }
-            </ul>
-        </nav>
-    </div>
+                </ul>
+            </nav>
+        </div>
+    }
 }
 <br />
 <button type="button" class="btn bg-gradient-info button-align" @onclick="OnClickAddProduto">Novo Produto</button>
 
 @code {
-    [Parameter]
-    public int PageNumber { get; set; }
+        [Parameter]
+        public int PageNumber { get; set; }
 
     private IPagedList<CoreBusiness.Produto> produtos;
+    public decimal produtosAll { get; set; }
+    public int produtosPages { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         produtos = ProdutosToPaged.Execute(PageNumber, 7);
+
+        produtosAll = ProdutosToPaged.ExecuteResult().Count();
+        produtosPages = (int)Math.Ceiling(produtosAll / 7);
+        JsRuntime.InvokeVoidAsync("console.log", produtos);
     }
 
     protected override async Task OnParametersSetAsync()
     {
         if (PageNumber < 1) PageNumber = 1;
+
         produtos = ProdutosToPaged.Execute(PageNumber, 7);
+        produtosAll = ProdutosToPaged.ExecuteResult().Count();
+        produtosPages = (int)Math.Ceiling(produtosAll / 7);
     }
 
     private void OnClickAddProduto()
@@ -89,11 +107,15 @@
 
     private void OnEditProduto(Produto produto)
     {
-        NavigationManager.NavigateTo($"/editarproduto/{produto.ProdutoId}");
+        NavigationManager.NavigateTo($"produtos/editarproduto/{produto.ProdutoId}");
     }
 
-    private void OnDeleteProduto(int produtoId)
+    private async void OnDeleteProduto(int produtoId, string nome)
     {
-        DeleteProduto.Execute(produtoId);
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Tem certeza que deseja excluir o produto " + nome + "?");
+        if (confirmed)
+        {
+            DeleteProduto.Execute(produtoId);
+        }
     }
 }

@@ -147,23 +147,31 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 62 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
+#line 67 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
        
     [Parameter]
-    public int PageNumber { get; set; } = 1;
+    public int PageNumber { get; set; }
 
     private IPagedList<Category> categories;
+    public decimal paginas { get; set; }
+    public int maximoPaginas { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         LoadCategories(PageNumber);
+
+        paginas = GetCategories.ExecuteResult().Count();
+        maximoPaginas = (int)Math.Ceiling(paginas / 7);
     }
 
     protected override async Task OnParametersSetAsync()
     {
         if (PageNumber < 1) PageNumber = 1;
+
         categories = GetCategories.Execute(PageNumber, 7);
+        paginas = GetCategories.ExecuteResult().Count();
+        maximoPaginas = (int)Math.Ceiling(paginas / 7);
     }
 
     private void OnClickAddCategory()
@@ -176,10 +184,16 @@ using PagedList;
         NavigationManager.NavigateTo($"/editarcategoria/{category.CategoryId}");
     }
 
-    private void DeleteCategory(int categoryId)
+    private async Task DeleteCategory(int categoryId, string nome)
     {
-        IDeleteCategory.Delete(categoryId);
-        LoadCategories(PageNumber);
+        //PopUp
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Tem certeza que deseja excluir a categoria " + nome + "?");
+        if (confirmed)
+        {
+            IDeleteCategory.Delete(categoryId);
+            LoadCategories(PageNumber);
+        }
+
     }
 
     private void LoadCategories(int page)
@@ -194,6 +208,7 @@ using PagedList;
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDeleteCategory IDeleteCategory { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewCategoriesUseCase ViewCategoryUseCase { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JsRuntime { get; set; }
     }
 }
 #pragma warning restore 1591

@@ -162,12 +162,12 @@ using PagedList;
     private void OnValidSubmit()
     {
         INewCategoryUseCase.Execute(category);
-        NavigationManager.NavigateTo("/categorias");
+        NavigationManager.NavigateTo("/categorias/1");
     }
 
     private void OnCancel()
     {
-        NavigationManager.NavigateTo("/categorias");
+        NavigationManager.NavigateTo("/categorias/1");
     }
 
 #line default

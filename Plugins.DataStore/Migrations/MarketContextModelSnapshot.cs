@@ -104,6 +104,21 @@ namespace Plugins.DataStore.Migrations
                     b.ToTable("Empresa");
                 });
 
+            modelBuilder.Entity("CoreBusiness.FotosProduto", b =>
+                {
+                    b.Property<int>("FotoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Imagem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FotoID");
+
+                    b.ToTable("Fotos");
+                });
+
             modelBuilder.Entity("CoreBusiness.Produto", b =>
                 {
                     b.Property<int>("ProdutoId")
@@ -113,6 +128,15 @@ namespace Plugins.DataStore.Migrations
 
                     b.Property<int?>("CategoryId")
                         .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Destaque")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("FotoID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -131,6 +155,8 @@ namespace Plugins.DataStore.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("FotoID");
+
                     b.ToTable("Produtos");
 
                     b.HasData(
@@ -138,6 +164,8 @@ namespace Plugins.DataStore.Migrations
                         {
                             ProdutoId = 1,
                             CategoryId = 1,
+                            Descricao = "",
+                            Destaque = false,
                             Name = "Produto Teste",
                             Preco = 100.0,
                             Quantidade = 50
@@ -146,6 +174,8 @@ namespace Plugins.DataStore.Migrations
                         {
                             ProdutoId = 2,
                             CategoryId = 1,
+                            Descricao = "",
+                            Destaque = false,
                             Name = "Short",
                             Preco = 5.9900000000000002,
                             Quantidade = 10
@@ -154,6 +184,8 @@ namespace Plugins.DataStore.Migrations
                         {
                             ProdutoId = 3,
                             CategoryId = 1,
+                            Descricao = "",
+                            Destaque = false,
                             Name = "Camisa",
                             Preco = 59.990000000000002,
                             Quantidade = 8
@@ -162,6 +194,8 @@ namespace Plugins.DataStore.Migrations
                         {
                             ProdutoId = 4,
                             CategoryId = 2,
+                            Descricao = "",
+                            Destaque = false,
                             Name = "Corta Vento",
                             Preco = 3.9900000000000002,
                             Quantidade = 100
@@ -209,12 +243,23 @@ namespace Plugins.DataStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CoreBusiness.FotosProduto", "Foto_Do_Produto")
+                        .WithMany("Produto")
+                        .HasForeignKey("FotoID");
+
                     b.Navigation("Categoria");
+
+                    b.Navigation("Foto_Do_Produto");
                 });
 
             modelBuilder.Entity("CoreBusiness.Category", b =>
                 {
                     b.Navigation("Produtos");
+                });
+
+            modelBuilder.Entity("CoreBusiness.FotosProduto", b =>
+                {
+                    b.Navigation("Produto");
                 });
 #pragma warning restore 612, 618
         }

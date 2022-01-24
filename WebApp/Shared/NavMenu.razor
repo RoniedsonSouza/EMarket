@@ -13,7 +13,7 @@
             </NavLink>
         </li>
         <li class="nav-item">
-            <NavLink class="nav-link" href="" @onclick="() => TesteClick()">
+            <NavLink class="nav-link" href="categorias/1" Match="NavLinkMatch.Prefix">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <span class="fa fa-stream small"></span>
                 </div>
@@ -21,7 +21,7 @@
             </NavLink>
         </li>
         <li class="nav-item">
-            <NavLink class="nav-link" href="produtos">
+            <NavLink class="nav-link" href="produtos/1" Match="NavLinkMatch.Prefix">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <span class="fa fa-tags small"></span>
                 </div>
@@ -94,27 +94,18 @@
 
 @code {
     [Parameter]
-    public int PageNumber { get; set; }
+    public int PageNumber { get; set; } = 1;
 
-    private async void TesteClick()
+    private string RoteRedirect(string rote)
     {
         var url = Navigation.Uri.Split('/');
-        await JsRuntime.InvokeVoidAsync("console.log", url[3]);
+        url[3] = "";
+        PageNumber = 1;
+        var chamada = url[3] + rote + "/" + PageNumber.ToString();
+        return chamada;
 
-        //PopUp
-        //bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        //JsRuntime.InvokeVoidAsync("console.log", rote);
     }
-
-    //private string MenuNavegacao(int nomeMenu)
-    //{
-    //        switch (nomeMenu)
-    //        {
-    //            case "Dashboard":
-
-
-    //        }
-    //    return nomeMenu;
-    //}
 
     private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;

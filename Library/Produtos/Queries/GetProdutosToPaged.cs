@@ -23,5 +23,9 @@ namespace Library.Produtos.Queries
         {
             return produtoRepository.GetProdutosToPaged(page, qtdPorPage);
         }
+        public IEnumerable<Produto> ExecuteResult()
+        {
+            return produtoRepository.GetProdutos();
+        }
     }
 }

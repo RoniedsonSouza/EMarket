@@ -147,7 +147,7 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 50 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
+#line 65 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
        
 
     private Produto produto;
@@ -164,12 +164,12 @@ using PagedList;
     private void OnValidSubmit()
     {
         IAddProduto.Execute(produto);
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 
     private void OnCancel()
     {
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 
 #line default

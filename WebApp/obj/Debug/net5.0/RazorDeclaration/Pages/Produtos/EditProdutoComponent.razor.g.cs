@@ -138,7 +138,7 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/editarproduto/{produtoId}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/produtos/editarproduto/{produtoId}")]
     public partial class EditProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -147,7 +147,7 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 53 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
+#line 67 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
        
     [Parameter]
     public string ProdutoId { get; set; }
@@ -170,10 +170,14 @@ using PagedList;
             this.produto = new Produto
             {
                 ProdutoId = prod.ProdutoId,
+                Foto_Do_Produto = prod.Foto_Do_Produto,
                 Name = prod.Name,
                 CategoryId = prod.CategoryId,
                 Quantidade = prod.Quantidade,
-                Preco = prod.Preco
+                Preco = prod.Preco,
+                Descricao = prod.Descricao,
+                Destaque = prod.Destaque
+                
             };
         }
     }
@@ -181,12 +185,12 @@ using PagedList;
     private void OnValidSubmit()
     {
         EditProduto.Execute(this.produto);
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 
     private void OnCancel()
     {
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 
 #line default

@@ -147,23 +147,32 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 67 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
+#line 76 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
        
-    [Parameter]
-    public int PageNumber { get; set; }
+        [Parameter]
+        public int PageNumber { get; set; }
 
     private IPagedList<CoreBusiness.Produto> produtos;
+    public decimal produtosAll { get; set; }
+    public int produtosPages { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         produtos = ProdutosToPaged.Execute(PageNumber, 7);
+
+        produtosAll = ProdutosToPaged.ExecuteResult().Count();
+        produtosPages = (int)Math.Ceiling(produtosAll / 7);
+        JsRuntime.InvokeVoidAsync("console.log", produtos);
     }
 
     protected override async Task OnParametersSetAsync()
     {
         if (PageNumber < 1) PageNumber = 1;
+
         produtos = ProdutosToPaged.Execute(PageNumber, 7);
+        produtosAll = ProdutosToPaged.ExecuteResult().Count();
+        produtosPages = (int)Math.Ceiling(produtosAll / 7);
     }
 
     private void OnClickAddProduto()
@@ -173,12 +182,16 @@ using PagedList;
 
     private void OnEditProduto(Produto produto)
     {
-        NavigationManager.NavigateTo($"/editarproduto/{produto.ProdutoId}");
+        NavigationManager.NavigateTo($"produtos/editarproduto/{produto.ProdutoId}");
     }
 
-    private void OnDeleteProduto(int produtoId)
+    private async void OnDeleteProduto(int produtoId, string nome)
     {
-        DeleteProduto.Execute(produtoId);
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Tem certeza que deseja excluir o produto " + nome + "?");
+        if (confirmed)
+        {
+            DeleteProduto.Execute(produtoId);
+        }
     }
 
 #line default
@@ -189,6 +202,7 @@ using PagedList;
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewProdutos ViewProdutos { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JsRuntime { get; set; }
     }
 }
 #pragma warning restore 1591

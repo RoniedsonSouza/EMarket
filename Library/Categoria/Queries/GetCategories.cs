@@ -23,5 +23,9 @@ namespace Library.Categoria.Queries
         {
             return categoryRepository.GetCategoriesAsync(pagina, qtdPorPagina);
         }
+        public IEnumerable<Category> ExecuteResult()
+        {
+            return categoryRepository.GetCategories();
+        }
     }
 }

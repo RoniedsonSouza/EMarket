@@ -21,6 +21,11 @@
         </div>
 
         <div class="form-group">
+            <label for="foto">Fotos do Produto</label>
+            <InputFile id="foto" @bind-Value="produto.Foto_Do_Produto" class="form-control"></InputFile>
+        </div>
+
+        <div class="form-group">
             <label for="category">Categoria</label>
             <select id="category" @bind="produto.CategoryId" class="form-control">
                 <option selected></option>
@@ -39,6 +44,16 @@
         <div class="form-group">
             <label for="preco">Preço</label>
             <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <InputTextArea id="descricao" @bind-Value="produto.Descricao" class="form-control"></InputTextArea>
+        </div>
+
+        <div class="form-group">
+            <label for="destaque">Mostrar em Destaque ?</label>
+            <InputCheckbox id="destaque" @bind-Value="produto.Destaque"></InputCheckbox>
         </div>
 
         <button type="submit" class="btn bg-gradient-info">Adicionar</button>
@@ -63,11 +78,11 @@
     private void OnValidSubmit()
     {
         IAddProduto.Execute(produto);
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 
     private void OnCancel()
     {
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 }

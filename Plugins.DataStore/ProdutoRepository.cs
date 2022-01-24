@@ -59,6 +59,9 @@ namespace Plugins.DataStore
             prod.Name = produto.Name;
             prod.Preco = produto.Preco;
             prod.Quantidade = produto.Quantidade;
+            prod.Destaque = produto.Destaque;
+            prod.Descricao = produto.Descricao;
+            prod.Foto_Do_Produto = produto.Foto_Do_Produto;
 
             context.SaveChanges();
         }

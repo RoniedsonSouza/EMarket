@@ -1,4 +1,4 @@
-﻿@page "/editarproduto/{produtoId}"
+﻿@page "/produtos/editarproduto/{produtoId}"
 @attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
@@ -13,40 +13,54 @@
 @if (produto != null)
 {
 
-    <EditForm Model="produto" OnValidSubmit="OnValidSubmit">
-        <DataAnnotationsValidator></DataAnnotationsValidator>
-        <ValidationSummary></ValidationSummary>
+<EditForm Model="produto" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
 
-        <div class="form-group">
-            <label for="name">Nome</label>
-            <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
-        </div>
+    <div class="form-group">
+        <label for="name">Nome</label>
+        <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
+    </div>
 
-        <div class="form-group">
-            <label for="category">Descrição</label>
-            <select id="category" @bind="produto.CategoryId" class="form-control">
-                <option selected></option>
-                @foreach (var cat in categories)
-                {
-                    <option value="@cat.CategoryId">@cat.Name</option>
-                }
-            </select>
-        </div>
+    <div class="form-group">
+        <label for="foto">Fotos do Produto</label>
+        <InputFile id="foto" @bind-Value="produto.Foto_Do_Produto" class="form-control"></InputFile>
+    </div>
 
-        <div class="form-group">
-            <label for="quantidade">Quantidade</label>
-            <InputNumber id="quantidade" @bind-Value="produto.Quantidade" class="form-control"></InputNumber>
-        </div>
+    <div class="form-group">
+        <label for="category">Categoria</label>
+        <select id="category" @bind="produto.CategoryId" class="form-control">
+            <option selected></option>
+            @foreach (var cat in categories)
+            {
+                <option value="@cat.CategoryId">@cat.Name</option>
+            }
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label for="preco">Quantidade</label>
-            <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
-        </div>
-        <div class="button-align-2">
-            <button type="submit" class="btn bg-gradient-info">Salvar</button>
-            <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
-        </div>
-    </EditForm>
+    <div class="form-group">
+        <label for="quantidade">Quantidade</label>
+        <InputNumber id="quantidade" @bind-Value="produto.Quantidade" class="form-control"></InputNumber>
+    </div>
+    <div class="form-group">
+        <label for="preco">Preço</label>
+        <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
+    </div>
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <InputTextArea id="descricao" @bind-Value="produto.Descricao" class="form-control"></InputTextArea>
+    </div>
+
+    <div class="form-group">
+        <label for="destaque">Mostrar em Destaque ?</label>
+        <InputCheckbox type="checkbox" id="destaque" @bind-Value="produto.Destaque"></InputCheckbox>
+    </div>
+
+    <div class="button-align-2">
+        <button type="submit" class="btn bg-gradient-info">Salvar</button>
+        <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
+    </div>
+</EditForm>
 
 }
 
@@ -72,10 +86,14 @@
             this.produto = new Produto
             {
                 ProdutoId = prod.ProdutoId,
+                Foto_Do_Produto = prod.Foto_Do_Produto,
                 Name = prod.Name,
                 CategoryId = prod.CategoryId,
                 Quantidade = prod.Quantidade,
-                Preco = prod.Preco
+                Preco = prod.Preco,
+                Descricao = prod.Descricao,
+                Destaque = prod.Destaque
+                
             };
         }
     }
@@ -83,11 +101,11 @@
     private void OnValidSubmit()
     {
         EditProduto.Execute(this.produto);
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 
     private void OnCancel()
     {
-        NavigationManager.NavigateTo("/produtos");
+        NavigationManager.NavigateTo("/produtos/1");
     }
 }
