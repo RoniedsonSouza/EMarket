@@ -42,6 +42,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="text" value="@empresa?.Email" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <br />
@@ -88,12 +96,12 @@
         </div>
     </div>
 </div>
-<br/>
+<br />
 @if (empresa != null)
- {
+{
     <button type="button" class="btn bg-gradient-light button-align" @onclick="@(() => OnEditEmpresa(empresa))">Editar</button>
- }
-<br/>
+}
+<br />
 <br />
 <br />
 <br />
@@ -118,7 +126,8 @@
                 Cidade = empr.Cidade,
                 Estado = empr.Estado,
                 Pais = empr.Pais,
-                Sobre = empr.Sobre
+                Sobre = empr.Sobre,
+                Email = empr.Email
             };
         }
 

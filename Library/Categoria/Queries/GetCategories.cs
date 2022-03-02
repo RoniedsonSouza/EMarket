@@ -19,7 +19,7 @@ namespace Library.Categoria.Queries
             this.categoryRepository = categoryRepository;
         }
 
-        public IPagedList<Category> Execute(int pagina, int qtdPorPagina)
+        public IPagedList<Category> Execute(int? pagina, int qtdPorPagina)
         {
             return categoryRepository.GetCategoriesAsync(pagina, qtdPorPagina);
         }

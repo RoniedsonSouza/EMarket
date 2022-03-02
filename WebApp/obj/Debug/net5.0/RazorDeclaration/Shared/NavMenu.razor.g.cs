@@ -131,6 +131,20 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -139,7 +153,7 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 95 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
+#line 109 "D:\CODIGOS\Ecommerce\WebApp\Shared\NavMenu.razor"
        
     [Parameter]
     public int PageNumber { get; set; } = 1;

@@ -1,8 +1,10 @@
 ﻿using CoreBusiness;
 using Library.PluginInterfaces;
+using Microsoft.AspNetCore.Http;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace DataStore
             };
         }
 
-        public void AddProduto(Produto produto)
+        public void AddProduto(Produto produto, ImagensProdutos imagens)
         {
             if (produtos.Any(x => x.Name.Equals(produto.Name, StringComparison.OrdinalIgnoreCase))) return;
 
@@ -73,7 +75,27 @@ namespace DataStore
             return produtos.Where(x => x.CategoryId == categoryId);
         }
 
-        public IPagedList<Produto> GetProdutosToPaged(int page, int qtdPorPage)
+        public IPagedList<Produto> GetProdutosToPaged(int? page, int qtdPorPage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddProduto(Produto produto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddImagem(Produto produto, List<ImagensProdutos> img)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ImagensProdutos> GetImagensProduto(int produtoId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateImagensProduto(int prodId, List<ImagensProdutos> img)
         {
             throw new NotImplementedException();
         }

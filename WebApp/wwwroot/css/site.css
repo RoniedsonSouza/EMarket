@@ -216,3 +216,37 @@ aside:hover::-webkit-scrollbar-thumb {
 .nav-link.active > .icon > span{
     color: white;
 }
+
+.imagensProduto {
+    width: 230px;
+    height: 210px;
+    object-fit: cover;
+    background: no-repeat center;
+    background-size: cover;
+}
+
+#gridImagens {
+    display: grid;
+    grid-template-columns: 230px 230px 230px 230px;
+    grid-gap: 5px;
+    padding: 10px;
+    border: groove;
+    border-radius: 6px;
+}
+
+.btn-remove-img {
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0 8px;
+}
+
+#divImagens {
+    position: relative;
+}
+
+    #divImagens a {
+        color: #67748e;
+    }

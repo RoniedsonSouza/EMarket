@@ -63,7 +63,7 @@ namespace DataStore
             categories?.Remove(GetCategoryById(categoryId));
         }
 
-        public IPagedList<Category> GetCategoriesAsync(int pagina, int qtdPorPagina)
+        public IPagedList<Category> GetCategoriesAsync(int? pagina, int qtdPorPagina)
         {
             throw new NotImplementedException();
         }

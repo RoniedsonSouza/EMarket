@@ -1,5 +1,6 @@
 ﻿@page "/Perfil"
 
+@attribute [Authorize(Policy = "Admin")]
 <body class="g-sidenav-show bg-gray-100">
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <div class="container-fluid">

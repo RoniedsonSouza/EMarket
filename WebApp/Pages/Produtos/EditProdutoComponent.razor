@@ -5,7 +5,9 @@
 @inject IAddProduto IAddProduto
 @inject IGetCategoryById GetCategoryById
 @inject IGetProdutoById GetProdutoById
+@inject IGetImagensProduto GetImagensProduto
 @inject IEditProduto EditProduto
+@inject IEditImagensProduto EditImagensProduto
 @inject IViewCategoriesUseCase ViewCategoriesUseCase
 
 <h3>Editar Produto</h3>
@@ -13,54 +15,67 @@
 @if (produto != null)
 {
 
-<EditForm Model="produto" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+    <EditForm Model="produto" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
 
-    <div class="form-group">
-        <label for="name">Nome</label>
-        <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
-    </div>
-
-    <div class="form-group">
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
+        </div>
         <label for="foto">Fotos do Produto</label>
-        <InputFile id="foto" @bind-Value="produto.Foto_Do_Produto" class="form-control"></InputFile>
-    </div>
+        @if (imagens.Count() > 0)
+        {
+            <div id="gridImagens" class="form-group">
+                @foreach (var img in imagens.Select((value, index) => new { value, index}))
+                {
+                    <div id="divImagens">
+                        <a class="btn-remove-img text-dark" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
+                            <span class="fa fa-times"></span>
+                        </a>
+                        <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
+                    </div>
+                }
+            </div>
+        }
+        <div class="form-group">
+            <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control"></InputFile>
+        </div>
 
-    <div class="form-group">
-        <label for="category">Categoria</label>
-        <select id="category" @bind="produto.CategoryId" class="form-control">
-            <option selected></option>
-            @foreach (var cat in categories)
-            {
-                <option value="@cat.CategoryId">@cat.Name</option>
-            }
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="category">Categoria</label>
+            <select id="category" @bind="produto.CategoryId" class="form-control">
+                <option selected></option>
+                @foreach (var cat in categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label for="quantidade">Quantidade</label>
-        <InputNumber id="quantidade" @bind-Value="produto.Quantidade" class="form-control"></InputNumber>
-    </div>
-    <div class="form-group">
-        <label for="preco">Preço</label>
-        <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
-    </div>
-    <div class="form-group">
-        <label for="descricao">Descrição</label>
-        <InputTextArea id="descricao" @bind-Value="produto.Descricao" class="form-control"></InputTextArea>
-    </div>
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <InputNumber id="quantidade" @bind-Value="produto.Quantidade" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="preco">Preço</label>
+            <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <InputTextArea id="descricao" @bind-Value="produto.Descricao" class="form-control"></InputTextArea>
+        </div>
 
-    <div class="form-group">
-        <label for="destaque">Mostrar em Destaque ?</label>
-        <InputCheckbox type="checkbox" id="destaque" @bind-Value="produto.Destaque"></InputCheckbox>
-    </div>
+        <div class="form-group">
+            <label for="destaque">Mostrar em Destaque ?</label>
+            <InputCheckbox type="checkbox" id="destaque" @bind-Value="produto.Destaque"></InputCheckbox>
+        </div>
 
-    <div class="button-align-2">
-        <button type="submit" class="btn bg-gradient-info">Salvar</button>
-        <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
-    </div>
-</EditForm>
+        <div class="button-align-2">
+            <button type="submit" class="btn bg-gradient-info">Salvar</button>
+            <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
+        </div>
+    </EditForm>
 
 }
 
@@ -68,12 +83,42 @@
     [Parameter]
     public string ProdutoId { get; set; }
     private Produto produto;
+    private ImagensProdutos imagem;
+    private List<ImagensProdutos> imagens;
     private IEnumerable<Category> categories;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        imagem = new ImagensProdutos();
         categories = ViewCategoriesUseCase.Execute();
+    }
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        var fileFormat = "image/png";
+        var imageFile = inputFileChangeEventArgs.GetMultipleFiles();
+
+        foreach (var image in imageFile)
+        {
+            var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
+            var buffer = new byte[image.Size];
+            await image.OpenReadStream().ReadAsync(buffer);
+
+            imagem = new ImagensProdutos
+                {
+                    ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                    Imagem = buffer,
+                    ProdutoId = int.Parse(this.ProdutoId)
+                };
+
+            imagens.Add(imagem);
+        }
+    }
+
+    protected void RemoveImagem(int imgIndex)
+    {
+        imagens.RemoveAt(imgIndex);
     }
 
     protected override void OnParametersSet()
@@ -84,23 +129,25 @@
         {
             var prod = GetProdutoById.Execute(iProdutoId);
             this.produto = new Produto
-            {
-                ProdutoId = prod.ProdutoId,
-                Foto_Do_Produto = prod.Foto_Do_Produto,
-                Name = prod.Name,
-                CategoryId = prod.CategoryId,
-                Quantidade = prod.Quantidade,
-                Preco = prod.Preco,
-                Descricao = prod.Descricao,
-                Destaque = prod.Destaque
-                
-            };
+                {
+                    ProdutoId = prod.ProdutoId,
+                    Name = prod.Name,
+                    CategoryId = prod.CategoryId,
+                    Quantidade = prod.Quantidade,
+                    Preco = prod.Preco,
+                    Descricao = prod.Descricao,
+                    Destaque = prod.Destaque
+                };
+
+            var imgProd = GetImagensProduto.Execute(iProdutoId);
+            imagens = imgProd.ToList();
         }
     }
 
     private void OnValidSubmit()
     {
         EditProduto.Execute(this.produto);
+        EditImagensProduto.Execute(produto.ProdutoId, imagens);
         NavigationManager.NavigateTo("/produtos/1");
     }
 

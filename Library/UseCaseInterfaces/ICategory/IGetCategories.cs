@@ -8,7 +8,7 @@ namespace Library.UseCaseInterfaces.ICategory
 { 
     public interface IGetCategories
     {
-        IPagedList<Category> Execute(int pagina, int qtdPorPagina);
+        IPagedList<Category> Execute(int? pagina, int qtdPorPagina);
         IEnumerable<Category> ExecuteResult();
     }
 }

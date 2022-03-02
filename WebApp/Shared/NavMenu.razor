@@ -13,7 +13,7 @@
             </NavLink>
         </li>
         <li class="nav-item">
-            <NavLink class="nav-link" href="categorias/1" Match="NavLinkMatch.Prefix">
+            <NavLink class="nav-link" href="categorias/" Match="NavLinkMatch.Prefix">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <span class="fa fa-stream small"></span>
                 </div>
@@ -21,7 +21,7 @@
             </NavLink>
         </li>
         <li class="nav-item">
-            <NavLink class="nav-link" href="produtos/1" Match="NavLinkMatch.Prefix">
+            <NavLink class="nav-link" href="produtos/" Match="NavLinkMatch.Prefix">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <span class="fa fa-tags small"></span>
                 </div>
@@ -88,6 +88,20 @@
                 </div>
                 <span class="nav-link-text ms-1">Perfil</span>
             </NavLink>
+        </li>
+        <li class="nav-item">
+            <AuthorizeView>
+                <Authorized>
+                    <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+                        <button type="submit" class="btn btn-link nav-link" data-toggle="tooltip" data-placement="bottom" title="Sair" style="width: 86%;transform: none;text-transform: none;">
+                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <span class="fa fa-sign-out-alt small"></span>
+                            </div>
+                            <span class="cursor-pointer" aria-hidden="true">Sair</span>
+                        </button>
+                    </form>
+                </Authorized>
+            </AuthorizeView>
         </li>
     </ul>
 </div>

@@ -1,8 +1,11 @@
 ﻿using CoreBusiness;
 using Library.PluginInterfaces;
+using Microsoft.AspNetCore.Http;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +24,23 @@ namespace Plugins.DataStore
         {
             context.Produtos.Add(produto);
             context.SaveChanges();
+        }
+
+        public void AddImagem(Produto produto, List<ImagensProdutos> imgs)
+        {
+            if (imgs != null)
+            {
+                foreach (var img in imgs)
+                {
+                    context.ImagensProdutos.Add(new ImagensProdutos
+                    {
+                        Imagem = img.Imagem,
+                        ProdutoId = produto.ProdutoId,
+                        ImageUrl = img.ImageUrl
+                    });
+                    context.SaveChanges();
+                }
+            }
         }
 
         public void DeleteProduto(int produtoId)
@@ -42,9 +62,14 @@ namespace Plugins.DataStore
             return context.Produtos.ToList();
         }
 
-        public IPagedList<Produto> GetProdutosToPaged(int page, int qtdPorPage)
+        public IEnumerable<ImagensProdutos> GetImagensProduto(int produtoId)
         {
-            return context.Produtos.ToPagedList(page, qtdPorPage);
+            return context.ImagensProdutos.Where(i => i.ProdutoId == produtoId).ToList();
+        }
+
+        public IPagedList<Produto> GetProdutosToPaged(int? page, int qtdPorPage)
+        {
+            return context.Produtos.ToPagedList((int)page, qtdPorPage);
         }
 
         public IEnumerable<Produto> GetProdutosByCategoryId(int categoryId)
@@ -61,8 +86,20 @@ namespace Plugins.DataStore
             prod.Quantidade = produto.Quantidade;
             prod.Destaque = produto.Destaque;
             prod.Descricao = produto.Descricao;
-            prod.Foto_Do_Produto = produto.Foto_Do_Produto;
 
+            context.SaveChanges();
+        }
+
+        public void UpdateImagensProduto(int prodId, List<ImagensProdutos> imgs)
+        {
+            var imgsDoProduto = context.ImagensProdutos.Where(x => x.ProdutoId == prodId).ToList();
+
+            var includedImgsProduto = imgs.Except(imgsDoProduto).ToList();
+            var excludedImgsProduto = imgsDoProduto.Except(imgs).ToList();
+
+            context.ImagensProdutos.RemoveRange(excludedImgsProduto);
+            context.SaveChanges();
+            context.ImagensProdutos.AddRange(includedImgsProduto);
             context.SaveChanges();
         }
     }

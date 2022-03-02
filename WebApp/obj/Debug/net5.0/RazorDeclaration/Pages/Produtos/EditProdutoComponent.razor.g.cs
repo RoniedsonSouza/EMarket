@@ -132,6 +132,20 @@ using PagedList;
 #line hidden
 #nullable disable
 #nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
@@ -147,17 +161,48 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 67 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
+#line 82 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
        
     [Parameter]
     public string ProdutoId { get; set; }
     private Produto produto;
+    private ImagensProdutos imagem;
+    private List<ImagensProdutos> imagens;
     private IEnumerable<Category> categories;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        imagem = new ImagensProdutos();
         categories = ViewCategoriesUseCase.Execute();
+    }
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        var fileFormat = "image/png";
+        var imageFile = inputFileChangeEventArgs.GetMultipleFiles();
+
+        foreach (var image in imageFile)
+        {
+            var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
+            var buffer = new byte[image.Size];
+            await image.OpenReadStream().ReadAsync(buffer);
+
+            imagem = new ImagensProdutos
+                {
+                    ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                    Imagem = buffer,
+                    ProdutoId = int.Parse(this.ProdutoId)
+                };
+
+            imagens.Add(imagem);
+        }
+    }
+
+    protected void RemoveImagem(int imgID)
+    {
+        var itemRemove = imagens.Single(x => x.FotoID == imgID);
+        imagens.Remove(itemRemove);
     }
 
     protected override void OnParametersSet()
@@ -168,23 +213,25 @@ using PagedList;
         {
             var prod = GetProdutoById.Execute(iProdutoId);
             this.produto = new Produto
-            {
-                ProdutoId = prod.ProdutoId,
-                Foto_Do_Produto = prod.Foto_Do_Produto,
-                Name = prod.Name,
-                CategoryId = prod.CategoryId,
-                Quantidade = prod.Quantidade,
-                Preco = prod.Preco,
-                Descricao = prod.Descricao,
-                Destaque = prod.Destaque
-                
-            };
+                {
+                    ProdutoId = prod.ProdutoId,
+                    Name = prod.Name,
+                    CategoryId = prod.CategoryId,
+                    Quantidade = prod.Quantidade,
+                    Preco = prod.Preco,
+                    Descricao = prod.Descricao,
+                    Destaque = prod.Destaque
+                };
+
+            var imgProd = GetImagensProduto.Execute(iProdutoId);
+            imagens = imgProd.ToList();
         }
     }
 
     private void OnValidSubmit()
     {
         EditProduto.Execute(this.produto);
+        EditImagensProduto.Execute(produto.ProdutoId, imagens);
         NavigationManager.NavigateTo("/produtos/1");
     }
 
@@ -197,7 +244,9 @@ using PagedList;
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewCategoriesUseCase ViewCategoriesUseCase { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEditImagensProduto EditImagensProduto { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEditProduto EditProduto { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetImagensProduto GetImagensProduto { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetProdutoById GetProdutoById { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IAddProduto IAddProduto { get; set; }

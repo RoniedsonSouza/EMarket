@@ -69,5 +69,15 @@ namespace DataStore
                     string.Equals(x.NomeCaixa, caixaNome, StringComparison.OrdinalIgnoreCase) &&
                     x.DataTransacao >= date.Date && x.DataTransacao <= dateFinal.Date.AddDays(1).Date);
         }
+
+        public IEnumerable<Transaction> ValorTotal(DateTime data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Transaction> ValorTotalAnterior(DateTime data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

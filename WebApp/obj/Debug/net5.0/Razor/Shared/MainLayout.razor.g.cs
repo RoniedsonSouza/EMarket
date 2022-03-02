@@ -128,6 +128,20 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -182,24 +196,20 @@ using PagedList;
             __builder.AddAttribute(31, "class", "breadcrumb-item text-sm text-dark active");
             __builder.AddAttribute(32, "aria-current", "page");
             __builder.AddAttribute(33, "b-snfefjgk3b");
-            __builder.AddContent(34, 
 #nullable restore
 #line 28 "D:\CODIGOS\Ecommerce\WebApp\Shared\MainLayout.razor"
-                                                                                                  char.ToUpper(pagina[0])
+__builder.AddContent(34, char.ToUpper(pagina[0]));
 
 #line default
 #line hidden
 #nullable disable
-            );
-            __builder.AddContent(35, 
 #nullable restore
 #line 28 "D:\CODIGOS\Ecommerce\WebApp\Shared\MainLayout.razor"
-                                                                                                                          pagina.Substring(1)
+__builder.AddContent(35, pagina.Substring(1));
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.CloseElement();
             __builder.CloseElement();
@@ -246,15 +256,13 @@ using PagedList;
             __builder.OpenElement(59, "div");
             __builder.AddAttribute(60, "class", "content px-4");
             __builder.AddAttribute(61, "b-snfefjgk3b");
-            __builder.AddContent(62, 
 #nullable restore
 #line 198 "D:\CODIGOS\Ecommerce\WebApp\Shared\MainLayout.razor"
-             Body
+__builder.AddContent(62, Body);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.CloseElement();
             __builder.CloseElement();

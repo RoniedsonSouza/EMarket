@@ -76,6 +76,9 @@ namespace Plugins.DataStore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Endereco")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -104,19 +107,30 @@ namespace Plugins.DataStore.Migrations
                     b.ToTable("Empresa");
                 });
 
-            modelBuilder.Entity("CoreBusiness.FotosProduto", b =>
+            modelBuilder.Entity("CoreBusiness.ImagensProdutos", b =>
                 {
                     b.Property<int>("FotoID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Imagem")
+                    b.Property<string>("ContentType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Imagem")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
 
                     b.HasKey("FotoID");
 
-                    b.ToTable("Fotos");
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("ImagensProdutos");
                 });
 
             modelBuilder.Entity("CoreBusiness.Produto", b =>
@@ -136,9 +150,6 @@ namespace Plugins.DataStore.Migrations
                     b.Property<bool>("Destaque")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("FotoID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -154,8 +165,6 @@ namespace Plugins.DataStore.Migrations
                     b.HasKey("ProdutoId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("FotoID");
 
                     b.ToTable("Produtos");
 
@@ -235,6 +244,17 @@ namespace Plugins.DataStore.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("CoreBusiness.ImagensProdutos", b =>
+                {
+                    b.HasOne("CoreBusiness.Produto", "Produto")
+                        .WithMany("Imagens")
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
+                });
+
             modelBuilder.Entity("CoreBusiness.Produto", b =>
                 {
                     b.HasOne("CoreBusiness.Category", "Categoria")
@@ -243,13 +263,7 @@ namespace Plugins.DataStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CoreBusiness.FotosProduto", "Foto_Do_Produto")
-                        .WithMany("Produto")
-                        .HasForeignKey("FotoID");
-
                     b.Navigation("Categoria");
-
-                    b.Navigation("Foto_Do_Produto");
                 });
 
             modelBuilder.Entity("CoreBusiness.Category", b =>
@@ -257,9 +271,9 @@ namespace Plugins.DataStore.Migrations
                     b.Navigation("Produtos");
                 });
 
-            modelBuilder.Entity("CoreBusiness.FotosProduto", b =>
+            modelBuilder.Entity("CoreBusiness.Produto", b =>
                 {
-                    b.Navigation("Produto");
+                    b.Navigation("Imagens");
                 });
 #pragma warning restore 612, 618
         }

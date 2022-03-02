@@ -128,6 +128,20 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SelectProdutoForSellingComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -171,15 +185,13 @@ using PagedList;
 #line hidden
 #nullable disable
             );
-            __builder.AddContent(12, 
 #nullable restore
 #line 10 "D:\CODIGOS\Ecommerce\WebApp\Controls\SelectProdutoForSellingComponent.razor"
-                                             cat.Name
+__builder.AddContent(12, cat.Name);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
 #nullable restore
 #line 11 "D:\CODIGOS\Ecommerce\WebApp\Controls\SelectProdutoForSellingComponent.razor"
@@ -229,27 +241,23 @@ using PagedList;
 #nullable disable
             );
             __builder.OpenElement(20, "td");
-            __builder.AddContent(21, 
 #nullable restore
 #line 27 "D:\CODIGOS\Ecommerce\WebApp\Controls\SelectProdutoForSellingComponent.razor"
-                         prod.Name
+__builder.AddContent(21, prod.Name);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(22, "\r\n                    ");
             __builder.OpenElement(23, "td");
-            __builder.AddContent(24, 
 #nullable restore
 #line 28 "D:\CODIGOS\Ecommerce\WebApp\Controls\SelectProdutoForSellingComponent.razor"
-                         prod.Quantidade
+__builder.AddContent(24, prod.Quantidade);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.CloseElement();
 #nullable restore

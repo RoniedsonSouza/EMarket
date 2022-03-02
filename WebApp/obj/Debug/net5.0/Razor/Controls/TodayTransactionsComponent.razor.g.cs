@@ -128,6 +128,20 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
     public partial class TodayTransactionsComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -162,87 +176,73 @@ using PagedList;
 #nullable disable
             __builder.OpenElement(4, "tr");
             __builder.OpenElement(5, "td");
-            __builder.AddContent(6, 
 #nullable restore
 #line 21 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                         tran.NomeCaixa
+__builder.AddContent(6, tran.NomeCaixa);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(7, "\r\n                    ");
             __builder.OpenElement(8, "td");
-            __builder.AddContent(9, 
 #nullable restore
 #line 22 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                         tran.NomeProduto
+__builder.AddContent(9, tran.NomeProduto);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(10, "\r\n                    ");
             __builder.OpenElement(11, "td");
-            __builder.AddContent(12, 
 #nullable restore
 #line 23 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                         tran.DataTransacao.ToString("g")
+__builder.AddContent(12, tran.DataTransacao.ToString("g"));
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(13, "\r\n                    ");
             __builder.OpenElement(14, "td");
-            __builder.AddContent(15, 
 #nullable restore
 #line 24 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                         tran.QtdAnterior
+__builder.AddContent(15, tran.QtdAnterior);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(16, "\r\n                    ");
             __builder.OpenElement(17, "td");
-            __builder.AddContent(18, 
 #nullable restore
 #line 25 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                         tran.QuantidadeVendida
+__builder.AddContent(18, tran.QuantidadeVendida);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(19, "\r\n                    ");
             __builder.OpenElement(20, "td");
-            __builder.AddContent(21, 
 #nullable restore
 #line 26 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                          tran.QtdAnterior - tran.QuantidadeVendida
+__builder.AddContent(21, tran.QtdAnterior - tran.QuantidadeVendida);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.AddMarkupContent(22, "\r\n                    ");
             __builder.OpenElement(23, "td");
-            __builder.AddContent(24, 
 #nullable restore
 #line 27 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
-                          string.Format("{0:c}", tran.QuantidadeVendida * tran.Preco)
+__builder.AddContent(24, string.Format("{0:c}", tran.QuantidadeVendida * tran.Preco));
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.CloseElement();
 #nullable restore

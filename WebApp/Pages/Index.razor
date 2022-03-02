@@ -1,6 +1,9 @@
 ﻿@page "/"
+@attribute [Authorize(Policy = "Admin")]
 
-<div class="container-fluid py-4">
+@inject IJSRuntime JSRuntime
+@inject IGetTransactions GetTransactions
+<div class="py-4">
     <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
@@ -74,10 +77,10 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Vendas</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Ganhos do Mês</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    R$103,430
-                                    <span class="text-success text-sm font-weight-bolder">+5%</span>
+                                    @(string.Format("R${0:#,###.##}", ganhoMes))
+                                    <span class="@color text-sm font-weight-bolder">@(string.Format("{0:P0}", porcentagem))</span>
                                 </h5>
                             </div>
                         </div>
@@ -93,3 +96,36 @@
     </div>
 
 </div>
+
+@code{
+
+    private IEnumerable<Transaction> totalTransacoes;
+    private IEnumerable<Transaction> totalTransacoesMesPassado;
+    private double ganhoMes;
+    private double ganhoMesAnterior;
+    private double porcentagem;
+    private string color;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        totalTransacoes = GetTransactions.ValorTotalTransacoes(DateTime.Now);
+        totalTransacoesMesPassado = GetTransactions.ValorTotalTransacoesAnteriores(DateTime.Now);
+
+        ganhoMes = totalTransacoes.Sum(x => x.Preco * x.QuantidadeVendida);
+        ganhoMesAnterior = totalTransacoesMesPassado.Sum(x => x.Preco * x.QuantidadeVendida);
+
+        CalculaPorcentagem();
+    }
+
+    private void CalculaPorcentagem()
+    {
+        porcentagem = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+
+        if (porcentagem < 0)
+            color = "text-danger";
+        else
+            color = "text-success";
+    }
+}

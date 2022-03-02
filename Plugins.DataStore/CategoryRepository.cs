@@ -37,9 +37,9 @@ namespace Plugins.DataStore
             return context.Categorias.ToList();
         }
 
-        public IPagedList<Category> GetCategoriesAsync(int pagina, int qtdPorPagina) 
+        public IPagedList<Category> GetCategoriesAsync(int? pagina, int qtdPorPagina) 
         {
-            return context.Categorias.ToPagedList(pagina, qtdPorPagina);
+            return context.Categorias.ToPagedList((int)pagina, qtdPorPagina);
         }
 
         public Category GetCategoryById(int categoryId)

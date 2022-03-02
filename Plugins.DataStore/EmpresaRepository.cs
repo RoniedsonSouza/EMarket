@@ -40,6 +40,7 @@ namespace Plugins.DataStore
             emp.Estado = empresa.Estado;
             emp.Pais = empresa.Pais;
             emp.Sobre = empresa.Sobre;
+            emp.Email = empresa.Email;
 
             context.SaveChanges();
         }

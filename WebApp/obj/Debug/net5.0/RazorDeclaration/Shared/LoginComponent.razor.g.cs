@@ -125,6 +125,20 @@ using PagedList;
 #line hidden
 #nullable disable
 #nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "D:\CODIGOS\Ecommerce\WebApp\Shared\LoginComponent.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 

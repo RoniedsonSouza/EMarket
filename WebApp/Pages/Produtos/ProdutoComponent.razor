@@ -1,4 +1,4 @@
-﻿@page "/produtos/{PageNumber:int}"
+﻿@page "/produtos/{PageNumber:int?}"
 @attribute [Authorize(Policy = "Admin")]
 
 @inject IJSRuntime JsRuntime
@@ -20,7 +20,7 @@
                 <th>Nome</th>
                 <th>Quantidade</th>
                 <th>Preço</th>
-                <th></th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -54,7 +54,7 @@
         <div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                    @for (int i = 1; i <= 5; i++)
+                    @for (int i = 1; i <= produtosPages; i++)
                     {
                         @if (i == PageNumber)
                         {
@@ -74,8 +74,8 @@
 <button type="button" class="btn bg-gradient-info button-align" @onclick="OnClickAddProduto">Novo Produto</button>
 
 @code {
-        [Parameter]
-        public int PageNumber { get; set; }
+    [Parameter]
+    public int? PageNumber { get; set; }
 
     private IPagedList<CoreBusiness.Produto> produtos;
     public decimal produtosAll { get; set; }
@@ -84,11 +84,11 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        PageNumber = PageNumber ?? 1;
         produtos = ProdutosToPaged.Execute(PageNumber, 7);
 
         produtosAll = ProdutosToPaged.ExecuteResult().Count();
         produtosPages = (int)Math.Ceiling(produtosAll / 7);
-        JsRuntime.InvokeVoidAsync("console.log", produtos);
     }
 
     protected override async Task OnParametersSetAsync()

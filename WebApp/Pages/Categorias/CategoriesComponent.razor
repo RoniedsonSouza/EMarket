@@ -1,4 +1,4 @@
-﻿@page "/categorias/{PageNumber:int}"
+﻿@page "/categorias/{PageNumber:int?}"
 @attribute [Authorize(Policy = "Admin")]
 
 @inject IJSRuntime JsRuntime
@@ -16,7 +16,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Descrição</th>
-                <th></th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
             {
                 <tr>
                     <td>@category.Name</td>
-                    <td>@category.Description</td>
+                    <td>@(category.Description == null ? "Sem Descrição" : @category.Description)</td>
                     <td>
                         <button type="button" class="btn btn-link text-danger px-3 mb-0" @onclick="@(() => DeleteCategory(category.CategoryId, category.Name))">
                             <span class="oi oi-trash" aria-hidden="true"></span>
@@ -66,26 +66,27 @@
 
 @code {
     [Parameter]
-    public int PageNumber { get; set; }
+    public int? PageNumber { get; set; }
 
     private IPagedList<Category> categories;
     public decimal paginas { get; set; }
     public int maximoPaginas { get; set; }
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        LoadCategories(PageNumber);
-
-        paginas = GetCategories.ExecuteResult().Count();
-        maximoPaginas = (int)Math.Ceiling(paginas / 7);
-    }
-
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         if (PageNumber < 1) PageNumber = 1;
 
         categories = GetCategories.Execute(PageNumber, 7);
+        paginas = GetCategories.ExecuteResult().Count();
+        maximoPaginas = (int)Math.Ceiling(paginas / 7);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        PageNumber = PageNumber ?? 1;
+        LoadCategories(PageNumber);
         paginas = GetCategories.ExecuteResult().Count();
         maximoPaginas = (int)Math.Ceiling(paginas / 7);
     }
@@ -112,7 +113,7 @@
 
     }
 
-    private void LoadCategories(int page)
+    private void LoadCategories(int? page)
     {
         categories = GetCategories.Execute(page, 7);
     }

@@ -132,7 +132,35 @@ using PagedList;
 #line hidden
 #nullable disable
 #nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
+using System.Drawing;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
+using System.IO;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
@@ -147,23 +175,54 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 65 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
+#line 80 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\AddProdutoComponent.razor"
        
 
     private Produto produto;
+    private ImagensProdutos imagem;
+    private List<ImagensProdutos> imagens;
+    private Image img;
     private IEnumerable<Category> categories;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
+        imagens = new List<ImagensProdutos>();
+        imagem = new ImagensProdutos();
         produto = new Produto();
         categories = ViewCategories.Execute();
+    }
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        var fileFormat = "image/png";
+        var imageFile = inputFileChangeEventArgs.GetMultipleFiles();
+
+        foreach (var image in imageFile)
+        {
+            var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
+            var buffer = new byte[image.Size];
+            await image.OpenReadStream().ReadAsync(buffer);
+
+            imagem = new ImagensProdutos
+                {
+                    ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                    Imagem = buffer
+                };
+
+            imagens.Add(imagem);
+        }
+    }
+
+    protected void RemoveImagem(int imgIndex)
+    {
+        imagens.RemoveAt(imgIndex);
     }
 
     private void OnValidSubmit()
     {
         IAddProduto.Execute(produto);
+        IAddImagem.Execute(produto, imagens);
         NavigationManager.NavigateTo("/produtos/1");
     }
 
@@ -177,6 +236,7 @@ using PagedList;
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewCategoriesUseCase ViewCategories { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IAddImagem IAddImagem { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IAddProduto IAddProduto { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
     }

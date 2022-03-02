@@ -1,8 +1,11 @@
 ﻿@page "/produtos/NovoProduto"
+@using System.Drawing
+@using System.IO
 @attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IAddProduto IAddProduto
+@inject IAddImagem IAddImagem
 @inject IGetCategoryById GetCategoryById
 @inject IViewCategoriesUseCase ViewCategories
 
@@ -10,7 +13,6 @@
 <br />
 @if (produto != null)
 {
-
     <EditForm Model="produto" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
@@ -19,10 +21,23 @@
             <label for="name">Nome</label>
             <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
         </div>
-
+        <label for="foto">Fotos do Produto</label>
+        @if (imagens.Count() > 0)
+        {
+            <div id="gridImagens" class="form-group">
+                @foreach (var img in imagens.Select((value, index) => new { value, index}))
+                {
+                    <div id="divImagens">
+                        <a class="btn-remove-img text-dark" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
+                            <span class="fa fa-times"></span>
+                        </a>
+                        <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
+                    </div>
+                }
+            </div>
+        }
         <div class="form-group">
-            <label for="foto">Fotos do Produto</label>
-            <InputFile id="foto" @bind-Value="produto.Foto_Do_Produto" class="form-control"></InputFile>
+            <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control"></InputFile>
         </div>
 
         <div class="form-group">
@@ -65,19 +80,50 @@
 @code {
 
     private Produto produto;
+    private ImagensProdutos imagem;
+    private List<ImagensProdutos> imagens;
+    private Image img;
     private IEnumerable<Category> categories;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
+        imagens = new List<ImagensProdutos>();
+        imagem = new ImagensProdutos();
         produto = new Produto();
         categories = ViewCategories.Execute();
+    }
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        var fileFormat = "image/png";
+        var imageFile = inputFileChangeEventArgs.GetMultipleFiles();
+
+        foreach (var image in imageFile)
+        {
+            var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
+            var buffer = new byte[image.Size];
+            await image.OpenReadStream().ReadAsync(buffer);
+
+            imagem = new ImagensProdutos
+                {
+                    ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                    Imagem = buffer
+                };
+
+            imagens.Add(imagem);
+        }
+    }
+
+    protected void RemoveImagem(int imgIndex)
+    {
+        imagens.RemoveAt(imgIndex);
     }
 
     private void OnValidSubmit()
     {
         IAddProduto.Execute(produto);
+        IAddImagem.Execute(produto, imagens);
         NavigationManager.NavigateTo("/produtos/1");
     }
 

@@ -131,6 +131,27 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Index.razor"
+           [Authorize(Policy = "Admin")]
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -139,6 +160,45 @@ using PagedList;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 100 "D:\CODIGOS\Ecommerce\WebApp\Pages\Index.razor"
+      
+
+    private IEnumerable<Transaction> totalTransacoes;
+    private IEnumerable<Transaction> totalTransacoesMesPassado;
+    private double ganhoMes;
+    private double ganhoMesAnterior;
+    private double porcentagem;
+    private string color;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        totalTransacoes = GetTransactions.ValorTotalTransacoes(DateTime.Now);
+        totalTransacoesMesPassado = GetTransactions.ValorTotalTransacoesAnteriores(DateTime.Now);
+
+        ganhoMes = totalTransacoes.Sum(x => x.Preco * x.QuantidadeVendida);
+        ganhoMesAnterior = totalTransacoesMesPassado.Sum(x => x.Preco * x.QuantidadeVendida);
+
+        CalculaPorcentagem();
+    }
+
+    private void CalculaPorcentagem()
+    {
+        porcentagem = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+
+        if (porcentagem < 0)
+            color = "text-danger";
+        else
+            color = "text-success";
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetTransactions GetTransactions { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JSRuntime { get; set; }
     }
 }
 #pragma warning restore 1591

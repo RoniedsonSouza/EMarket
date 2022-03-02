@@ -132,13 +132,27 @@ using PagedList;
 #line hidden
 #nullable disable
 #nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/categorias/{PageNumber:int}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/categorias/{PageNumber:int?}")]
     public partial class CategoriesComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -150,26 +164,27 @@ using PagedList;
 #line 67 "D:\CODIGOS\Ecommerce\WebApp\Pages\Categorias\CategoriesComponent.razor"
        
     [Parameter]
-    public int PageNumber { get; set; }
+    public int? PageNumber { get; set; }
 
     private IPagedList<Category> categories;
     public decimal paginas { get; set; }
     public int maximoPaginas { get; set; }
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        LoadCategories(PageNumber);
-
-        paginas = GetCategories.ExecuteResult().Count();
-        maximoPaginas = (int)Math.Ceiling(paginas / 7);
-    }
-
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         if (PageNumber < 1) PageNumber = 1;
 
         categories = GetCategories.Execute(PageNumber, 7);
+        paginas = GetCategories.ExecuteResult().Count();
+        maximoPaginas = (int)Math.Ceiling(paginas / 7);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        PageNumber = PageNumber ?? 1;
+        LoadCategories(PageNumber);
         paginas = GetCategories.ExecuteResult().Count();
         maximoPaginas = (int)Math.Ceiling(paginas / 7);
     }
@@ -196,7 +211,7 @@ using PagedList;
 
     }
 
-    private void LoadCategories(int page)
+    private void LoadCategories(int? page)
     {
         categories = GetCategories.Execute(page, 7);
     }

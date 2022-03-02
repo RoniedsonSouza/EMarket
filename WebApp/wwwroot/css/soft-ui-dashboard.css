@@ -1958,7 +1958,7 @@ progress {
 
         .col-xl-1-5 {
             flex: 0 0 auto;
-            width: 10.45%;
+            width: 11.45%;
         }
 
     .col-xl-2 {
@@ -2684,6 +2684,7 @@ progress {
 .form-control {
     display: block;
     width: 100%;
+    height: fit-content;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 400;
@@ -19525,8 +19526,8 @@ fieldset:disabled .btn {
 .oblique {
     transform: skewX(-10deg);
     overflow: hidden;
-    width: 60%;
-    right: -10rem;
+    width: 100%;
+    right: -2rem;
     border-bottom-left-radius: 0.75rem;
 }
 

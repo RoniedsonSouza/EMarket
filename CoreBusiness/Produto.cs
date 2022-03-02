@@ -21,8 +21,7 @@ namespace CoreBusiness
         public double? Preco { get; set; }
         public bool Destaque { get; set; }
         public string Descricao { get; set; }
-        public int? FotoID { get; set; }
         public Category Categoria { get; set; }
-        public FotosProduto Foto_Do_Produto { get; set; }
+        public List<ImagensProdutos> Imagens { get; set; }
     }
 }

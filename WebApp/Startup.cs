@@ -81,6 +81,9 @@ namespace WebApp
             services.AddTransient<IViewEmpresa, ViewEmpresa>();
             services.AddTransient<IGetCategories, GetCategories>();
             services.AddTransient<IGetProdutosToPaged, GetProdutosToPaged>();
+            services.AddTransient<IAddImagem, AddImagem>();
+            services.AddTransient<IEditImagensProduto, EditImagensProduto>();
+            services.AddTransient<IGetImagensProduto, GetImagensProduto>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

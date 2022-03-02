@@ -128,6 +128,20 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
     public partial class VenderProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -142,7 +156,7 @@ using PagedList;
 #line hidden
 #nullable disable
             __builder.OpenComponent<Microsoft.AspNetCore.Components.Forms.EditForm>(0);
-            __builder.AddAttribute(1, "Model", Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<System.Object>(
+            __builder.AddAttribute(1, "Model", global::Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<System.Object>(
 #nullable restore
 #line 6 "D:\CODIGOS\Ecommerce\WebApp\Controls\VenderProdutoComponent.razor"
                      produtoToSell
@@ -151,7 +165,7 @@ using PagedList;
 #line hidden
 #nullable disable
             ));
-            __builder.AddAttribute(2, "OnValidSubmit", Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<Microsoft.AspNetCore.Components.EventCallback<Microsoft.AspNetCore.Components.Forms.EditContext>>(Microsoft.AspNetCore.Components.EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Forms.EditContext>(this, 
+            __builder.AddAttribute(2, "OnValidSubmit", global::Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<Microsoft.AspNetCore.Components.EventCallback<Microsoft.AspNetCore.Components.Forms.EditContext>>(Microsoft.AspNetCore.Components.EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Forms.EditContext>(this, 
 #nullable restore
 #line 6 "D:\CODIGOS\Ecommerce\WebApp\Controls\VenderProdutoComponent.razor"
                                                    SellProduto
@@ -218,7 +232,7 @@ using PagedList;
 #line default
 #line hidden
 #nullable disable
-                , 35, Microsoft.AspNetCore.Components.EventCallback.Factory.Create(this, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.CreateInferredEventCallback(this, __value => produtoToSell.Quantidade = __value, produtoToSell.Quantidade)), 36, () => produtoToSell.Quantidade);
+                , 35, Microsoft.AspNetCore.Components.EventCallback.Factory.Create(this, global::Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.CreateInferredEventCallback(this, __value => produtoToSell.Quantidade = __value, produtoToSell.Quantidade)), 36, () => produtoToSell.Quantidade);
                 __builder2.CloseElement();
                 __builder2.AddMarkupContent(37, "\r\n        ");
                 __builder2.AddMarkupContent(38, "<button type=\"submit\" class=\"btn bg-gradient-info button-align\">Vender</button>");
@@ -236,15 +250,13 @@ using PagedList;
 #nullable disable
             __builder.OpenElement(40, "div");
             __builder.AddAttribute(41, "class", "alert alert-danger");
-            __builder.AddContent(42, 
 #nullable restore
 #line 26 "D:\CODIGOS\Ecommerce\WebApp\Controls\VenderProdutoComponent.razor"
-                                         errorMessage
+__builder.AddContent(42, errorMessage);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
 #nullable restore
 #line 27 "D:\CODIGOS\Ecommerce\WebApp\Controls\VenderProdutoComponent.razor"

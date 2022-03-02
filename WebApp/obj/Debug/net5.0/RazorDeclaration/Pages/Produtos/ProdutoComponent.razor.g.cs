@@ -132,13 +132,27 @@ using PagedList;
 #line hidden
 #nullable disable
 #nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/produtos/{PageNumber:int}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/produtos/{PageNumber:int?}")]
     public partial class ProdutoComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -149,8 +163,8 @@ using PagedList;
 #nullable restore
 #line 76 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\ProdutoComponent.razor"
        
-        [Parameter]
-        public int PageNumber { get; set; }
+    [Parameter]
+    public int? PageNumber { get; set; }
 
     private IPagedList<CoreBusiness.Produto> produtos;
     public decimal produtosAll { get; set; }
@@ -159,11 +173,11 @@ using PagedList;
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        PageNumber = PageNumber ?? 1;
         produtos = ProdutosToPaged.Execute(PageNumber, 7);
 
         produtosAll = ProdutosToPaged.ExecuteResult().Count();
         produtosPages = (int)Math.Ceiling(produtosAll / 7);
-        JsRuntime.InvokeVoidAsync("console.log", produtos);
     }
 
     protected override async Task OnParametersSetAsync()

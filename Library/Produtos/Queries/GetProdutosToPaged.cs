@@ -19,7 +19,7 @@ namespace Library.Produtos.Queries
             this.produtoRepository = produtoRepository;
         }
 
-        public IPagedList<Produto> Execute(int page, int qtdPorPage)
+        public IPagedList<Produto> Execute(int? page, int qtdPorPage)
         {
             return produtoRepository.GetProdutosToPaged(page, qtdPorPage);
         }

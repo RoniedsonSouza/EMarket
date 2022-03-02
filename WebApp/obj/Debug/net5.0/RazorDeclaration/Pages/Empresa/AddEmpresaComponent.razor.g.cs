@@ -132,6 +132,20 @@ using PagedList;
 #line hidden
 #nullable disable
 #nullable restore
+#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+using WebApp.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Empresa\AddEmpresaComponent.razor"
            [Authorize(Policy = "Admin")]
 
@@ -147,7 +161,7 @@ using PagedList;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 97 "D:\CODIGOS\Ecommerce\WebApp\Pages\Empresa\AddEmpresaComponent.razor"
+#line 105 "D:\CODIGOS\Ecommerce\WebApp\Pages\Empresa\AddEmpresaComponent.razor"
        
 
     private Empresa empresa;

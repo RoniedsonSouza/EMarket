@@ -17,7 +17,7 @@ namespace Library.PluginInterfaces
 
         Category GetCategoryById(int categoryId);
         void DeleteCategory(int categoryId);
-        IPagedList<Category> GetCategoriesAsync(int pagina, int qtdPorPagina);
+        IPagedList<Category> GetCategoriesAsync(int? pagina, int qtdPorPagina);
 
     }
 }

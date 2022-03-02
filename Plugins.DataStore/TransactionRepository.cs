@@ -57,5 +57,16 @@ namespace Plugins.DataStore
                     EF.Functions.Like(x.NomeCaixa, $"%{caixaNome}%") &&
                     x.DataTransacao >= date.Date && x.DataTransacao <= dateFinal.Date.AddDays(1).Date);
         }
+
+        public IEnumerable<Transaction> ValorTotal(DateTime data)
+        {
+            return context.Transactions.Where(x => x.DataTransacao.Month == data.Month);
+        }
+        public IEnumerable<Transaction> ValorTotalAnterior(DateTime data)
+        {
+            data = data.AddMonths(-1);
+            //IQueryable<DateTime> dataTransacoes = context.Transactions.Select(x => x.DataTransacao);
+            return context.Transactions.Where(x => x.DataTransacao.Date.ToString().Contains(data.ToString("yyyy-MM")));
+        }
     }
 }

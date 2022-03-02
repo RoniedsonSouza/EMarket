@@ -42,11 +42,11 @@
     private void OnValidSubmit()
     {
         INewCategoryUseCase.Execute(category);
-        NavigationManager.NavigateTo("/categorias/1");
+        NavigationManager.NavigateTo("/categorias/");
     }
 
     private void OnCancel()
     {
-        NavigationManager.NavigateTo("/categorias/1");
+        NavigationManager.NavigateTo("/categorias/");
     }
 }
