@@ -145,20 +145,6 @@ using WebApp.Areas.Identity;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Usuarios\UsuarioComponent.razor"
-using Library.Categoria.Queries;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 3 "D:\CODIGOS\Ecommerce\WebApp\Pages\Usuarios\UsuarioComponent.razor"
-using WebApp.Areas.Identity.Models;
-
-#line default
-#line hidden
-#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/Usuarios")]
     public partial class UsuarioComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -167,21 +153,6 @@ using WebApp.Areas.Identity.Models;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 32 "D:\CODIGOS\Ecommerce\WebApp\Pages\Usuarios\UsuarioComponent.razor"
-       
-    private IEnumerable<Usuario> usuarios;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        usuarios = GetUsuarios.Execute();
-    }
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetUsuarios GetUsuarios { get; set; }
     }
 }
 #pragma warning restore 1591
