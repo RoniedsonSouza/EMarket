@@ -5,12 +5,11 @@
     <table class="table table-bordered text-center">
         <thead>
             <tr>
-                <th>Caixa</th>
                 <th>Produto</th>
                 <th>Dt da Venda</th>
-                <th>Qtd Anterior</th>
-                <th>Qtd Vendida</th>
-                <th>Qtd Atual</th>
+                <th>Qtd. Anterior</th>
+                <th>Qtd. Vendida</th>
+                <th>Qtd. Atual</th>
                 <th>Valor da Venda</th>
             </tr>
         </thead>
@@ -18,9 +17,8 @@
             @foreach(var tran in transactions)
             {
                 <tr>
-                    <td>@tran.NomeCaixa</td>
                     <td>@tran.NomeProduto</td>
-                    <td>@tran.DataTransacao.ToString("g")</td>
+                    <td>@tran.DataTransacao.ToString("d")</td>
                     <td>@tran.QtdAnterior</td>
                     <td>@tran.QuantidadeVendida</td>
                     <td>@(tran.QtdAnterior - tran.QuantidadeVendida)</td>

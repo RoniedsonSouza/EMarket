@@ -147,6 +147,13 @@ using WebApp.Areas.Identity;
 #nullable disable
 #nullable restore
 #line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Index.razor"
+using Library.UseCaseInterfaces.IDashboard;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "D:\CODIGOS\Ecommerce\WebApp\Pages\Index.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
@@ -161,43 +168,57 @@ using WebApp.Areas.Identity;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 100 "D:\CODIGOS\Ecommerce\WebApp\Pages\Index.razor"
-      
+#line 101 "D:\CODIGOS\Ecommerce\WebApp\Pages\Index.razor"
+       
 
     private IEnumerable<Transaction> totalTransacoes;
     private IEnumerable<Transaction> totalTransacoesMesPassado;
+    private IEnumerable<Transaction> totalDiario;
+    private IEnumerable<Transaction> totalDiarioAnterior;
     private double ganhoMes;
+    private double ganhoDiario;
     private double ganhoMesAnterior;
-    private double porcentagem;
-    private string color;
+    private double ganhoDiarioAnterior;
+    private double porcentagemMensal;
+    private double porcentagemDiario;
+    private string colorGanhoMes;
+    private string colorGanhoDia;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        totalTransacoes = GetTransactions.ValorTotalTransacoes(DateTime.Now);
-        totalTransacoesMesPassado = GetTransactions.ValorTotalTransacoesAnteriores(DateTime.Now);
+        totalTransacoes = GetEstatisticasDashboard.ValorTotalTransacoes(DateTime.Now);
+        totalTransacoesMesPassado = GetEstatisticasDashboard.ValorTotalTransacoesAnteriores(DateTime.Now);
+        totalDiario = GetEstatisticasDashboard.ValorTotalDiario(DateTime.Now);
+        totalDiarioAnterior = GetEstatisticasDashboard.ValorTotalDiarioAnteriores(DateTime.Now);
 
         ganhoMes = totalTransacoes.Sum(x => x.Preco * x.QuantidadeVendida);
         ganhoMesAnterior = totalTransacoesMesPassado.Sum(x => x.Preco * x.QuantidadeVendida);
+        ganhoDiario = totalDiario.Sum(x => x.Preco * x.QuantidadeVendida);
+        ganhoDiarioAnterior = totalDiarioAnterior.Sum(x => x.Preco * x.QuantidadeVendida);
 
         CalculaPorcentagem();
     }
 
     private void CalculaPorcentagem()
     {
-        porcentagem = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+        porcentagemMensal = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+        porcentagemDiario  = (ganhoDiario - ganhoDiarioAnterior) / ganhoDiarioAnterior;
 
-        if (porcentagem < 0)
-            color = "text-danger";
-        else
-            color = "text-success";
+        if (double.IsInfinity(porcentagemDiario))
+            porcentagemDiario = 0;
+        if (double.IsInfinity(porcentagemMensal))
+            porcentagemDiario = 0;
+
+        colorGanhoMes = porcentagemMensal < 0 ? "text-danger" : "text-success";
+        colorGanhoDia = porcentagemDiario < 0 ? colorGanhoDia = "text-danger" : "text-success";
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetTransactions GetTransactions { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetEstatisticasDashboard GetEstatisticasDashboard { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JSRuntime { get; set; }
     }
 }

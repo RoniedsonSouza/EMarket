@@ -1,8 +1,9 @@
 ﻿@page "/"
+@using Library.UseCaseInterfaces.IDashboard
 @attribute [Authorize(Policy = "Admin")]
 
 @inject IJSRuntime JSRuntime
-@inject IGetTransactions GetTransactions
+@inject IGetEstatisticasDashboard GetEstatisticasDashboard
 <div class="py-4">
     <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -13,8 +14,8 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Lucro Diário</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    R$53,000
-                                    <span class="text-success text-sm font-weight-bolder">+55%</span>
+                                    @(string.Format("R${0:#,###.##}", ganhoDiario))
+                                    <span class="@colorGanhoDia text-sm font-weight-bolder">@(string.Format("{0:P0}", porcentagemDiario))</span>
                                 </h5>
                             </div>
                         </div>
@@ -80,7 +81,7 @@
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Ganhos do Mês</p>
                                 <h5 class="font-weight-bolder mb-0">
                                     @(string.Format("R${0:#,###.##}", ganhoMes))
-                                    <span class="@color text-sm font-weight-bolder">@(string.Format("{0:P0}", porcentagem))</span>
+                                    <span class="@colorGanhoMes text-sm font-weight-bolder">@(string.Format("{0:P0}", porcentagemMensal))</span>
                                 </h5>
                             </div>
                         </div>
@@ -97,35 +98,49 @@
 
 </div>
 
-@code{
+@code {
 
     private IEnumerable<Transaction> totalTransacoes;
     private IEnumerable<Transaction> totalTransacoesMesPassado;
+    private IEnumerable<Transaction> totalDiario;
+    private IEnumerable<Transaction> totalDiarioAnterior;
     private double ganhoMes;
+    private double ganhoDiario;
     private double ganhoMesAnterior;
-    private double porcentagem;
-    private string color;
+    private double ganhoDiarioAnterior;
+    private double porcentagemMensal;
+    private double porcentagemDiario;
+    private string colorGanhoMes;
+    private string colorGanhoDia;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        totalTransacoes = GetTransactions.ValorTotalTransacoes(DateTime.Now);
-        totalTransacoesMesPassado = GetTransactions.ValorTotalTransacoesAnteriores(DateTime.Now);
+        totalTransacoes = GetEstatisticasDashboard.ValorTotalTransacoes(DateTime.Now);
+        totalTransacoesMesPassado = GetEstatisticasDashboard.ValorTotalTransacoesAnteriores(DateTime.Now);
+        totalDiario = GetEstatisticasDashboard.ValorTotalDiario(DateTime.Now);
+        totalDiarioAnterior = GetEstatisticasDashboard.ValorTotalDiarioAnteriores(DateTime.Now);
 
         ganhoMes = totalTransacoes.Sum(x => x.Preco * x.QuantidadeVendida);
         ganhoMesAnterior = totalTransacoesMesPassado.Sum(x => x.Preco * x.QuantidadeVendida);
+        ganhoDiario = totalDiario.Sum(x => x.Preco * x.QuantidadeVendida);
+        ganhoDiarioAnterior = totalDiarioAnterior.Sum(x => x.Preco * x.QuantidadeVendida);
 
         CalculaPorcentagem();
     }
 
     private void CalculaPorcentagem()
     {
-        porcentagem = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+        porcentagemMensal = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+        porcentagemDiario  = (ganhoDiario - ganhoDiarioAnterior) / ganhoDiarioAnterior;
 
-        if (porcentagem < 0)
-            color = "text-danger";
-        else
-            color = "text-success";
+        if (double.IsInfinity(porcentagemDiario))
+            porcentagemDiario = 0;
+        if (double.IsInfinity(porcentagemMensal))
+            porcentagemDiario = 0;
+
+        colorGanhoMes = porcentagemMensal < 0 ? "text-danger" : "text-success";
+        colorGanhoDia = porcentagemDiario < 0 ? colorGanhoDia = "text-danger" : "text-success";
     }
 }

@@ -25,15 +25,5 @@ namespace Library.Transacoes
         {
             return transactionRepository.Search(caixaNome, data, dataFinal);
         }
-
-        public IEnumerable<Transaction> ValorTotalTransacoes(DateTime data)
-        {
-            return transactionRepository.ValorTotal(data);
-        }
-
-        public IEnumerable<Transaction> ValorTotalTransacoesAnteriores(DateTime data)
-        {
-            return transactionRepository.ValorTotalAnterior(data);
-        }
     }
 }

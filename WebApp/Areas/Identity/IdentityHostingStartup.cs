@@ -1,10 +1,12 @@
 ﻿using System;
+using Library.Categoria.Queries;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Plugins.DataStore;
 using WebApp.Data;
 
 [assembly: HostingStartup(typeof(WebApp.Areas.Identity.IdentityHostingStartup))]

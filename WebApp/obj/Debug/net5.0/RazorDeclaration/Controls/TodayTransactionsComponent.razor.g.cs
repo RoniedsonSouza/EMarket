@@ -153,7 +153,7 @@ using WebApp.Areas.Identity;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 34 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
+#line 32 "D:\CODIGOS\Ecommerce\WebApp\Controls\TodayTransactionsComponent.razor"
        
 
     private IEnumerable<Transaction> transactions;

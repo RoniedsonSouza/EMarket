@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Areas.Identity.Models;
 
 namespace WebApp.Data
 {
@@ -14,6 +15,8 @@ namespace WebApp.Data
             : base(options)
         {
         }
+
+        public DbSet<AspNetUsers> AspNetUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

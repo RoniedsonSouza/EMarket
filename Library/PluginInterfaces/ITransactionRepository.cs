@@ -13,7 +13,5 @@ namespace Library.PluginInterfaces
         public IEnumerable<Transaction> GetByDay(string caixaNome, DateTime date);
         public IEnumerable<Transaction> Search(string caixaNome, DateTime date, DateTime dateFinal);
         public void Salvar(string nomeCaixa, int produtoId, string nomeProduto, double preco,int qtdAnterior, int qtdVendida);
-        public IEnumerable<Transaction> ValorTotal(DateTime data);
-        public IEnumerable<Transaction> ValorTotalAnterior(DateTime data);
     }
 }

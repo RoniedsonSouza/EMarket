@@ -1,6 +1,7 @@
 using Library.Categoria;
 using Library.Categoria.Commands;
 using Library.Categoria.Queries;
+using Library.Dashboard;
 using Library.Empresa;
 using Library.Empresa.Commands;
 using Library.Empresa.Queries;
@@ -10,6 +11,7 @@ using Library.Produtos.Commands;
 using Library.Produtos.Queries;
 using Library.Transacoes;
 using Library.UseCaseInterfaces.ICategory;
+using Library.UseCaseInterfaces.IDashboard;
 using Library.UseCaseInterfaces.IEmpresa;
 using Library.UseCaseInterfaces.IProduto;
 using Library.UseCaseInterfaces.ITransactions;
@@ -59,6 +61,7 @@ namespace WebApp
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
 
             services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
             services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
@@ -84,6 +87,7 @@ namespace WebApp
             services.AddTransient<IAddImagem, AddImagem>();
             services.AddTransient<IEditImagensProduto, EditImagensProduto>();
             services.AddTransient<IGetImagensProduto, GetImagensProduto>();
+            services.AddTransient<IGetEstatisticasDashboard, GetEstatisticasDashboard>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -199,10 +199,9 @@ using WebApp.Areas.Identity;
         }
     }
 
-    protected void RemoveImagem(int imgID)
+    protected void RemoveImagem(int imgIndex)
     {
-        var itemRemove = imagens.Single(x => x.FotoID == imgID);
-        imagens.Remove(itemRemove);
+        imagens.RemoveAt(imgIndex);
     }
 
     protected override void OnParametersSet()
