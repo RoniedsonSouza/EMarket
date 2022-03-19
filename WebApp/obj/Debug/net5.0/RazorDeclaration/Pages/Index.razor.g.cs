@@ -209,8 +209,6 @@ using Library.UseCaseInterfaces.IDashboard;
             porcentagemMensal = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
         if (ganhoDiario != 0 || ganhoDiarioAnterior != 0)
             porcentagemDiario = (ganhoDiario - ganhoDiarioAnterior) / ganhoDiarioAnterior;
-        else
-            ganhoDiario = 0;
 
         if (double.IsInfinity(porcentagemDiario))
             porcentagemDiario = 0;

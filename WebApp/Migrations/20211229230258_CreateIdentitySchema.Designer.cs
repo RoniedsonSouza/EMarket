@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApp.Data;
+using Plugins.DataStore;
 
 namespace WebApp.Migrations
 {
-    [DbContext(typeof(AccountContext))]
+    [DbContext(typeof(MarketContext))]
     [Migration("20211229230258_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

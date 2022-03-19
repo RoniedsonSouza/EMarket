@@ -1,14 +1,16 @@
 ﻿using CoreBusiness;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Plugins.DataStore.Persistence.Configuration;
 using System;
 
 namespace Plugins.DataStore
 {
     public class MarketContext : DbContext
     {
-        public MarketContext(DbContextOptions options) : base(options)
+        public MarketContext(DbContextOptions<MarketContext> options) : base(options)
         {
-
         }
 
         public DbSet<Category> Categorias { get; set; }
@@ -16,6 +18,10 @@ namespace Plugins.DataStore
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<ImagensProdutos> ImagensProdutos { get; set; }
+        public DbSet<Venda> Vendas { get; set; }
+        public DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public DbSet<AspNetUsersRefreshToken> AspNetUsersRefreshToken { get; set; }
+        public DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +35,17 @@ namespace Plugins.DataStore
                 .WithOne(p => p.Produto)
                 .HasForeignKey(p => p.ProdutoId);
 
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(c => c.AspNetUserClaims)
+                .WithOne(p => p.AspNetUsers)
+                .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(c => c.AspNetUsersRefreshToken)
+                .WithOne(p => p.AspNetUsers)
+                .HasForeignKey(p => p.AspNetUsersId);
+
+
             modelBuilder.Entity<Category>().HasData(
                     new Category { CategoryId = 1, Name = "Blusa", Description = "Blusa" },
                     new Category { CategoryId = 2, Name = "Calçados", Description = "Calçados" },
@@ -41,6 +58,10 @@ namespace Plugins.DataStore
                     new Produto { ProdutoId = 3, CategoryId = 1, Name = "Camisa", Quantidade = 8, Preco = 59.99, Destaque = false, Descricao = "" },
                     new Produto { ProdutoId = 4, CategoryId = 2, Name = "Corta Vento", Quantidade = 100, Preco = 3.99, Destaque = false, Descricao = "" }
                 );
+
+            modelBuilder.ApplyConfiguration(new AspNetUserClaimsConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
+            modelBuilder.ApplyConfiguration(new ProdutoConfiguration());
         }
     }
 }

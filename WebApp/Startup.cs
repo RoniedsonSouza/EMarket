@@ -1,3 +1,4 @@
+using CoreBusiness;
 using Library.Categoria;
 using Library.Categoria.Commands;
 using Library.Categoria.Queries;
@@ -17,6 +18,7 @@ using Library.UseCaseInterfaces.IProduto;
 using Library.UseCaseInterfaces.ITransactions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +42,9 @@ namespace WebApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddDefaultIdentity<AspNetUsers>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<MarketContext>();
 
             services.AddDbContext<MarketContext>(options => 
             {
