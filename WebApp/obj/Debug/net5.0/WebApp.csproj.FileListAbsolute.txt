@@ -165,7 +165,6 @@ D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Pages\Produtos\Cai
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Pages\Produtos\EditProdutoComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Pages\Produtos\ProdutoComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Pages\Produtos\TransactionsComponent.razor.g.cs
-D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Pages\Usuarios\UsuarioComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Shared\LoginComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\_Imports.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\RazorDeclaration\Shared\MainLayout.razor.g.cs
@@ -192,7 +191,6 @@ D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Pages\Produtos\CaixaConsoleCo
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Pages\Produtos\EditProdutoComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Pages\Produtos\ProdutoComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Pages\Produtos\TransactionsComponent.razor.g.cs
-D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Pages\Usuarios\UsuarioComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Shared\LoginComponent.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\_Imports.razor.g.cs
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\Razor\Shared\MainLayout.razor.g.cs
@@ -238,3 +236,7 @@ D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\refint\WebApp.dll
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\WebApp.pdb
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\WebApp.genruntimeconfig.cache
 D:\CODIGOS\Ecommerce\WebApp\obj\Debug\net5.0\ref\WebApp.dll
+D:\CODIGOS\Ecommerce\WebApp\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+D:\CODIGOS\Ecommerce\WebApp\bin\Debug\net5.0\Npgsql.dll
+D:\CODIGOS\Ecommerce\WebApp\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\CODIGOS\Ecommerce\WebApp\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll

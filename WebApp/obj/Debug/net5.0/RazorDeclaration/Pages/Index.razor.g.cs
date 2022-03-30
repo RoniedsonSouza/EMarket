@@ -190,11 +190,13 @@ using Library.UseCaseInterfaces.IDashboard;
 
         totalTransacoes = GetEstatisticasDashboard.ValorTotalTransacoes(DateTime.Now);
         totalTransacoesMesPassado = GetEstatisticasDashboard.ValorTotalTransacoesAnteriores(DateTime.Now);
+
         totalDiario = GetEstatisticasDashboard.ValorTotalDiario(DateTime.Now);
         totalDiarioAnterior = GetEstatisticasDashboard.ValorTotalDiarioAnteriores(DateTime.Now);
 
         ganhoMes = totalTransacoes.Sum(x => x.Preco * x.QuantidadeVendida);
         ganhoMesAnterior = totalTransacoesMesPassado.Sum(x => x.Preco * x.QuantidadeVendida);
+
         ganhoDiario = totalDiario.Sum(x => x.Preco * x.QuantidadeVendida);
         ganhoDiarioAnterior = totalDiarioAnterior.Sum(x => x.Preco * x.QuantidadeVendida);
 
@@ -203,8 +205,10 @@ using Library.UseCaseInterfaces.IDashboard;
 
     private void CalculaPorcentagem()
     {
-        porcentagemMensal = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
-        porcentagemDiario  = (ganhoDiario - ganhoDiarioAnterior) / ganhoDiarioAnterior;
+        if(ganhoMes != 0 || ganhoMesAnterior != 0)
+            porcentagemMensal = (ganhoMes - ganhoMesAnterior) / ganhoMesAnterior;
+        if (ganhoDiario != 0 || ganhoDiarioAnterior != 0)
+            porcentagemDiario = (ganhoDiario - ganhoDiarioAnterior) / ganhoDiarioAnterior;
 
         if (double.IsInfinity(porcentagemDiario))
             porcentagemDiario = 0;
