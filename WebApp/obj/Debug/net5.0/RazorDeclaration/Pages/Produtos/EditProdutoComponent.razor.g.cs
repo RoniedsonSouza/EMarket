@@ -13,140 +13,140 @@ namespace WebApp.Pages.Produtos
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 1 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 2 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 3 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 4 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 5 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 6 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 7 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 8 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 9 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using WebApp;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 10 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using WebApp.Controls;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 11 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using WebApp.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 12 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 12 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using CoreBusiness;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 13 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 13 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.ICategory;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 14 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 14 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.IProduto;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 15 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 15 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.ITransactions;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 16 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 16 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Library.UseCaseInterfaces.IEmpresa;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 17 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 17 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using PagedList;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 18 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 18 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using Microsoft.AspNetCore.Identity;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 19 "D:\CODIGOS\Ecommerce\WebApp\_Imports.razor"
+#line 19 "C:\Codigos\EMarket\WebApp\_Imports.razor"
 using WebApp.Areas.Identity;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
+#line 2 "C:\Codigos\EMarket\WebApp\Pages\Produtos\EditProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
@@ -161,7 +161,7 @@ using WebApp.Areas.Identity;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 82 "D:\CODIGOS\Ecommerce\WebApp\Pages\Produtos\EditProdutoComponent.razor"
+#line 92 "C:\Codigos\EMarket\WebApp\Pages\Produtos\EditProdutoComponent.razor"
        
     [Parameter]
     public string ProdutoId { get; set; }

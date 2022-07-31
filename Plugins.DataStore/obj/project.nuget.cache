@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JslWQYa5kIRVwNn20QCf6nlKKxy0kimu9KzVx9n7NfeaIEC4N5b1pE1xDkfLKut3RA8fTGBD5CFryjtoUZVLFg==",
+  "dgSpecHash": "9Uxmqmo/UmKREk8DBfZlqLJ4vB39ZhhsoiJQ92ID0qsUCuVTDra5OWCW5zJZeuX9B26DAkJk3evUBvaYlSXDmg==",
   "success": true,
-  "projectFilePath": "D:\\CODIGOS\\Ecommerce\\Plugins.DataStore\\Plugins.DataStore.csproj",
+  "projectFilePath": "C:\\Codigos\\EMarket\\Plugins.DataStore\\Plugins.DataStore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ronie\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\ronie\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.14\\microsoft.aspnetcore.http.features.5.0.14.nupkg.sha512",

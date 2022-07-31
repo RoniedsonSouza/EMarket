@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5aZos5QHo2HpAEMvDob0pqg4Wabz/mHEeETTdfocqnTifq3fneAr/KW5spFXsNVHULDU4Pn3huWihgzgRYjsbw==",
+  "dgSpecHash": "hhva2OJQtAQtEPn+jcdGjksV97Y54wAxUwV8NmdBKggjp3Ka58X1sHgRt8wJIZVUOTWE1zUGqNX5+7PhwWU68w==",
   "success": true,
-  "projectFilePath": "D:\\CODIGOS\\Ecommerce\\DataStore\\DataStore.csproj",
+  "projectFilePath": "C:\\Codigos\\EMarket\\DataStore\\DataStore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ronie\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.14\\microsoft.aspnetcore.http.features.5.0.14.nupkg.sha512",
     "C:\\Users\\ronie\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",

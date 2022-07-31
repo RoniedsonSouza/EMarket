@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BlmVwAzE00cl9u/QE9MXEGBeBKaoyc8UuRono2VXwR1l9qMsKfn16wjCPmBa7CRVn08Ss20hEpr60s8z33oVaw==",
+  "dgSpecHash": "6ncSZBVkkGzBLJejyhH8+7wtednNhk69iptv5I4u7BBQIA4lNDCLSsNNAIQH8JH3eWrum4r/UcdOvAPBD2toKA==",
   "success": true,
-  "projectFilePath": "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj",
+  "projectFilePath": "C:\\Codigos\\EMarket\\Library\\Library.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ronie\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.14\\microsoft.aspnetcore.http.features.5.0.14.nupkg.sha512",
     "C:\\Users\\ronie\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",

@@ -10,3 +10,15 @@ D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.dll
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\refint\CoreBusiness.dll
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\CoreBusiness.pdb
 D:\CODIGOS\Ecommerce\CoreBusiness\obj\Debug\net5.0\ref\CoreBusiness.dll
+C:\Codigos\EMarket\CoreBusiness\bin\Debug\net5.0\CoreBusiness.deps.json
+C:\Codigos\EMarket\CoreBusiness\bin\Debug\net5.0\CoreBusiness.dll
+C:\Codigos\EMarket\CoreBusiness\bin\Debug\net5.0\CoreBusiness.pdb
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.csproj.AssemblyReference.cache
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.GeneratedMSBuildEditorConfig.editorconfig
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.AssemblyInfoInputs.cache
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.AssemblyInfo.cs
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.csproj.CoreCompileInputs.cache
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.dll
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\refint\CoreBusiness.dll
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\CoreBusiness.pdb
+C:\Codigos\EMarket\CoreBusiness\obj\Debug\net5.0\ref\CoreBusiness.dll

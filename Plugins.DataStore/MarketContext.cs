@@ -29,6 +29,7 @@ namespace Plugins.DataStore
                 .WithOne(p => p.Produto)
                 .HasForeignKey(p => p.ProdutoId);
 
+
             modelBuilder.Entity<Category>().HasData(
                     new Category { CategoryId = 1, Name = "Blusa", Description = "Blusa" },
                     new Category { CategoryId = 2, Name = "Calçados", Description = "Calçados" },

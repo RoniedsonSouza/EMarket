@@ -18,63 +18,73 @@
     <EditForm Model="produto" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
+                </div>
 
-        <div class="form-group">
-            <label for="name">Nome</label>
-            <InputText id="name" @bind-Value="produto.Name" class="form-control"></InputText>
-        </div>
-        <label for="foto">Fotos do Produto</label>
-        @if (imagens.Count() > 0)
-        {
-            <div id="gridImagens" class="form-group">
-                @foreach (var img in imagens.Select((value, index) => new { value, index}))
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="category">Categoria</label>
+                            <select id="category" @bind="produto.CategoryId" class="form-control">
+                                <option selected></option>
+                                @foreach (var cat in categories)
+                                {
+                                    <option value="@cat.CategoryId">@cat.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade</label>
+                            <InputNumber id="quantidade" @bind-Value="produto.Quantidade" class="form-control"></InputNumber>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="preco">Preço</label>
+                    <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <InputTextArea id="descricao" @bind-Value="produto.Descricao" class="form-control" rows="8"></InputTextArea>
+                </div>
+
+                <div class="form-group">
+                    <label for="destaque">Mostrar em Destaque ?</label>
+                    <InputCheckbox type="checkbox" id="destaque" @bind-Value="produto.Destaque"></InputCheckbox>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label for="foto">Fotos do Produto</label>
+                @if (imagens.Count() > 0)
                 {
-                    <div id="divImagens">
-                        <a class="btn-remove-img text-dark" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
-                            <span class="fa fa-times"></span>
-                        </a>
-                        <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
+                    <div id="gridImagens" class="form-group">
+                        @foreach (var img in imagens.Select((value, index) => new { value, index }))
+                        {
+                            <div id="divImagens">
+                                <a class="btn-remove-img" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
+                                    <span class="fa fa-times"></span>
+                                </a>
+                                <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
+                            </div>
+                        }
                     </div>
                 }
+                <div class="form-group">
+                    <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control"></InputFile>
+                </div>
             </div>
-        }
-        <div class="form-group">
-            <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control"></InputFile>
+            <div class="button-align-2">
+                <button type="submit" class="btn bg-gradient-info">Salvar</button>
+                <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="category">Categoria</label>
-            <select id="category" @bind="produto.CategoryId" class="form-control">
-                <option selected></option>
-                @foreach (var cat in categories)
-                {
-                    <option value="@cat.CategoryId">@cat.Name</option>
-                }
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="quantidade">Quantidade</label>
-            <InputNumber id="quantidade" @bind-Value="produto.Quantidade" class="form-control"></InputNumber>
-        </div>
-        <div class="form-group">
-            <label for="preco">Preço</label>
-            <InputNumber id="preco" @bind-Value="produto.Preco" @bind-Value:format="F2" class="form-control"></InputNumber>
-        </div>
-        <div class="form-group">
-            <label for="descricao">Descrição</label>
-            <InputTextArea id="descricao" @bind-Value="produto.Descricao" class="form-control"></InputTextArea>
-        </div>
-
-        <div class="form-group">
-            <label for="destaque">Mostrar em Destaque ?</label>
-            <InputCheckbox type="checkbox" id="destaque" @bind-Value="produto.Destaque"></InputCheckbox>
-        </div>
-
-        <div class="button-align-2">
-            <button type="submit" class="btn bg-gradient-info">Salvar</button>
-            <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
-        </div>
     </EditForm>
 
 }

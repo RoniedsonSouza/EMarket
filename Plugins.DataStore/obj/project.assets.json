@@ -5930,24 +5930,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ronie\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ronie\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CODIGOS\\Ecommerce\\Plugins.DataStore\\Plugins.DataStore.csproj",
+      "projectUniqueName": "C:\\Codigos\\EMarket\\Plugins.DataStore\\Plugins.DataStore.csproj",
       "projectName": "Plugins.DataStore",
-      "projectPath": "D:\\CODIGOS\\Ecommerce\\Plugins.DataStore\\Plugins.DataStore.csproj",
+      "projectPath": "C:\\Codigos\\EMarket\\Plugins.DataStore\\Plugins.DataStore.csproj",
       "packagesPath": "C:\\Users\\ronie\\.nuget\\packages\\",
-      "outputPath": "D:\\CODIGOS\\Ecommerce\\Plugins.DataStore\\obj\\",
+      "outputPath": "C:\\Codigos\\EMarket\\Plugins.DataStore\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\ronie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5961,11 +5956,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\CODIGOS\\Ecommerce\\CoreBusiness\\CoreBusiness.csproj": {
-              "projectPath": "D:\\CODIGOS\\Ecommerce\\CoreBusiness\\CoreBusiness.csproj"
+            "C:\\Codigos\\EMarket\\CoreBusiness\\CoreBusiness.csproj": {
+              "projectPath": "C:\\Codigos\\EMarket\\CoreBusiness\\CoreBusiness.csproj"
             },
-            "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj": {
-              "projectPath": "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj"
+            "C:\\Codigos\\EMarket\\Library\\Library.csproj": {
+              "projectPath": "C:\\Codigos\\EMarket\\Library\\Library.csproj"
             }
           }
         }
@@ -6028,7 +6023,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   },

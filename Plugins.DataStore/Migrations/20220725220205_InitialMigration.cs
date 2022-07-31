@@ -22,6 +22,28 @@ namespace Plugins.DataStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Empresa",
+                columns: table => new
+                {
+                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Celular = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Endereco = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Pais = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sobre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Empresa", x => x.EmpresaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -49,7 +71,9 @@ namespace Plugins.DataStore.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantidade = table.Column<int>(type: "int", nullable: false),
-                    Preco = table.Column<double>(type: "float", nullable: false)
+                    Preco = table.Column<double>(type: "float", nullable: false),
+                    Destaque = table.Column<bool>(type: "bit", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,6 +83,28 @@ namespace Plugins.DataStore.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categorias",
                         principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImagensProdutos",
+                columns: table => new
+                {
+                    FotoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Imagem = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProdutoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImagensProdutos", x => x.FotoID);
+                    table.ForeignKey(
+                        name: "FK_ImagensProdutos_Produtos_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Produtos",
+                        principalColumn: "ProdutoId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -79,14 +125,19 @@ namespace Plugins.DataStore.Migrations
 
             migrationBuilder.InsertData(
                 table: "Produtos",
-                columns: new[] { "ProdutoId", "CategoryId", "Name", "Preco", "Quantidade" },
+                columns: new[] { "ProdutoId", "CategoryId", "Descricao", "Destaque", "Name", "Preco", "Quantidade" },
                 values: new object[,]
                 {
-                    { 1, 1, "Produto Teste", 100.0, 50 },
-                    { 2, 1, "Short", 5.9900000000000002, 10 },
-                    { 3, 1, "Camisa", 59.990000000000002, 8 },
-                    { 4, 2, "Corta Vento", 3.9900000000000002, 100 }
+                    { 1, 1, "", false, "Produto Teste", 100.0, 50 },
+                    { 2, 1, "", false, "Short", 5.9900000000000002, 10 },
+                    { 3, 1, "", false, "Camisa", 59.990000000000002, 8 },
+                    { 4, 2, "", false, "Corta Vento", 3.9900000000000002, 100 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImagensProdutos_ProdutoId",
+                table: "ImagensProdutos",
+                column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_CategoryId",
@@ -97,10 +148,16 @@ namespace Plugins.DataStore.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Produtos");
+                name: "Empresa");
+
+            migrationBuilder.DropTable(
+                name: "ImagensProdutos");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
 
             migrationBuilder.DropTable(
                 name: "Categorias");

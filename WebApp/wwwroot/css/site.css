@@ -230,7 +230,7 @@ aside:hover::-webkit-scrollbar-thumb {
     grid-template-columns: 230px 230px 230px 230px;
     grid-gap: 5px;
     padding: 10px;
-    border: groove;
+    border: 1px solid;
     border-radius: 6px;
 }
 
@@ -241,12 +241,23 @@ aside:hover::-webkit-scrollbar-thumb {
     top: 0;
     right: 0;
     padding: 0 8px;
+    border: 1px solid white;
+    background: #67748e;
+    border-radius: 100%;
+    margin: -8px;
 }
+
+    a.btn-remove-img:hover {
+        color: #67748e !important;
+        background: white;
+        border-color: red;
+        border: 1px solid;
+    }
 
 #divImagens {
     position: relative;
 }
 
     #divImagens a {
-        color: #67748e;
+        color: #ffe6e6;
     }

@@ -1,5 +1,6 @@
 ﻿@page "/caixa_console"
-@attribute [Authorize(Policy = "Caixa")]
+@* Alterar para Caixa *@
+@attribute [Authorize(Policy = "Admin")]
 
 @if (!string.IsNullOrWhiteSpace(caixaNome))
 {

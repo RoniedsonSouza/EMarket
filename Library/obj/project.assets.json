@@ -261,24 +261,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ronie\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ronie\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj",
+      "projectUniqueName": "C:\\Codigos\\EMarket\\Library\\Library.csproj",
       "projectName": "Library",
-      "projectPath": "D:\\CODIGOS\\Ecommerce\\Library\\Library.csproj",
+      "projectPath": "C:\\Codigos\\EMarket\\Library\\Library.csproj",
       "packagesPath": "C:\\Users\\ronie\\.nuget\\packages\\",
-      "outputPath": "D:\\CODIGOS\\Ecommerce\\Library\\obj\\",
+      "outputPath": "C:\\Codigos\\EMarket\\Library\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\ronie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -292,8 +287,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\CODIGOS\\Ecommerce\\CoreBusiness\\CoreBusiness.csproj": {
-              "projectPath": "D:\\CODIGOS\\Ecommerce\\CoreBusiness\\CoreBusiness.csproj"
+            "C:\\Codigos\\EMarket\\CoreBusiness\\CoreBusiness.csproj": {
+              "projectPath": "C:\\Codigos\\EMarket\\CoreBusiness\\CoreBusiness.csproj"
             }
           }
         }
@@ -336,7 +331,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   },
