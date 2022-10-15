@@ -4391,11 +4391,11 @@ fieldset:disabled .btn {
     transition: height 0.35s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/*@media (prefers-reduced-motion: reduce) {
     .collapsing {
         transition: none;
     }
-}
+}*/
 
 .dropup,
 .dropend,
@@ -20618,7 +20618,6 @@ hr.horizontal {
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link {
     padding-top: 0.675rem;
     padding-bottom: 0.675rem;
-    margin: 0 1rem;
 }
 
     .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link .nav-link-text,

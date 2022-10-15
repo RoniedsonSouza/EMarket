@@ -19,6 +19,39 @@ namespace Plugins.DataStore.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CoreBusiness.Banners", b =>
+                {
+                    b.Property<int>("BannerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("Banner")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("BannerUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deletado")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UltimaModificacao")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("BannerID");
+
+                    b.ToTable("Banners");
+                });
+
             modelBuilder.Entity("CoreBusiness.Category", b =>
                 {
                     b.Property<int>("CategoryId")

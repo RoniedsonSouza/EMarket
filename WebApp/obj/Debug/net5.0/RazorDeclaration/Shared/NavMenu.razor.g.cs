@@ -153,7 +153,7 @@ using WebApp.Areas.Identity;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 109 "C:\Codigos\EMarket\WebApp\Shared\NavMenu.razor"
+#line 129 "C:\Codigos\EMarket\WebApp\Shared\NavMenu.razor"
        
     [Parameter]
     public int PageNumber { get; set; } = 1;

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Banners\Commands\" />
+  </ItemGroup>
+
 </Project>

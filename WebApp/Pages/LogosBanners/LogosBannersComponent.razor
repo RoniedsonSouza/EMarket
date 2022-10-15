@@ -1,0 +1,100 @@
+﻿@page "/logos-banners"
+@using Library.UseCaseInterfaces.IBanners
+@attribute [Authorize(Policy = "Admin")]
+
+@inject NavigationManager NavigationManager
+@inject IGetBanners GetBanners
+@inject IViewBanners ViewBanners
+
+<h3>Logos e Banners</h3>
+<br />
+
+
+<EditForm Model="carrosselBanners" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div class="col-sm-12">
+        <label for="banners">Banners</label>
+        <div id="gridBanners" class="form-group">
+            @*@foreach (var img in carrosselBanners.Select((value, index) => new { value, index }))
+            {
+            <div id="divBanners">
+            <a class="btn-remove-img text-dark" @onclick="@(() => RemoveBanner(img.index))" title="Excluir Banner">
+            <span class="fa fa-times"></span>
+            </a>
+            <img class="banner" src="@img.value.BannerUrl" multiple />
+            </div>
+            }*@
+
+            @foreach (var img in carrosselBanners.Select((value, index) => new { value, index }))
+            {
+                <div class="card">
+                    <div class="card-body" style="padding:0;">
+                        <a style="letter-spacing:0rem;" class="btn-remove-img text-dark" @onclick="@(() => RemoveBanner(img.index))" title="Excluir Banner">
+                            <span class="fa fa-times"></span>
+                        </a>
+                        <img class="imgsBanner" src="@img.value.BannerUrl" multiple />
+                    </div>
+                </div>
+            }
+
+            <div class="card custom-file text-center">
+                <InputFile id="banners" class="custom-file-input" OnChange="@OnInputFileChanged" multiple></InputFile>
+                <div class="card-body">
+                    <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
+                    <div class="card-footer">Adicionar Banner</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private Banners banners;
+    private List<Banners> carrosselBanners;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        var fileFormat = "image/png";
+        var bannerFile = inputFileChangeEventArgs.GetMultipleFiles();
+
+        foreach (var baner in bannerFile)
+        {
+            var resizedImageFile = await baner.RequestImageFileAsync(fileFormat, 100, 100);
+            var buffer = new byte[baner.Size];
+            await baner.OpenReadStream().ReadAsync(buffer);
+
+            banners = new Banners
+                {
+                    BannerUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                    Banner = buffer
+                };
+
+            carrosselBanners.Add(banners);
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        carrosselBanners = GetBanners.Execute();
+
+    }
+
+    protected void RemoveBanner(int bnrIndex)
+    {
+        carrosselBanners.RemoveAt(bnrIndex);
+    }
+
+    private void OnValidSubmit()
+    {
+        NavigationManager.NavigateTo("/logos-banners");
+    }
+}

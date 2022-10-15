@@ -67,7 +67,7 @@
                         @foreach (var img in imagens.Select((value, index) => new { value, index }))
                         {
                             <div id="divImagens">
-                                <a class="btn-remove-img" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
+                                <a style="letter-spacing:0rem;" class="btn-remove-img" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
                                     <span class="fa fa-times"></span>
                                 </a>
                                 <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
@@ -76,7 +76,7 @@
                     </div>
                 }
                 <div class="form-group">
-                    <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control"></InputFile>
+                    <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control" accept="image/png, image/jpeg"></InputFile>
                 </div>
             </div>
             <div class="button-align-2">
@@ -113,7 +113,8 @@
         {
             var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
             var buffer = new byte[image.Size];
-            await image.OpenReadStream().ReadAsync(buffer);
+            await image.OpenReadStream(1800000).ReadAsync(buffer);
+
 
             imagem = new ImagensProdutos
                 {
@@ -121,6 +122,7 @@
                     Imagem = buffer,
                     ProdutoId = int.Parse(this.ProdutoId)
                 };
+
 
             imagens.Add(imagem);
         }

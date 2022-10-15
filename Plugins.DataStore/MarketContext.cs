@@ -16,6 +16,7 @@ namespace Plugins.DataStore
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<ImagensProdutos> ImagensProdutos { get; set; }
+        public DbSet<Banners> Banners { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

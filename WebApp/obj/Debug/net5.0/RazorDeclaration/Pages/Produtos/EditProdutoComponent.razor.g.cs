@@ -186,7 +186,8 @@ using WebApp.Areas.Identity;
         {
             var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
             var buffer = new byte[image.Size];
-            await image.OpenReadStream().ReadAsync(buffer);
+            await image.OpenReadStream(1800000).ReadAsync(buffer);
+
 
             imagem = new ImagensProdutos
                 {
@@ -194,6 +195,7 @@ using WebApp.Areas.Identity;
                     Imagem = buffer,
                     ProdutoId = int.Parse(this.ProdutoId)
                 };
+
 
             imagens.Add(imagem);
         }
