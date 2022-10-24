@@ -146,14 +146,35 @@ using WebApp.Areas.Identity;
 #line hidden
 #nullable disable
 #nullable restore
+#line 20 "C:\Codigos\EMarket\WebApp\_Imports.razor"
+using Blazored.Toast;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 21 "C:\Codigos\EMarket\WebApp\_Imports.razor"
+using Blazored.Toast.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Codigos\EMarket\WebApp\Pages\LogosBanners\LogosBannersComponent.razor"
-using Library.UseCaseInterfaces.IBanners;
+using CoreBusiness.Enum;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\Codigos\EMarket\WebApp\Pages\LogosBanners\LogosBannersComponent.razor"
+using Library.UseCaseInterfaces.IBanners;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Codigos\EMarket\WebApp\Pages\LogosBanners\LogosBannersComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
@@ -168,10 +189,11 @@ using Library.UseCaseInterfaces.IBanners;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 52 "C:\Codigos\EMarket\WebApp\Pages\LogosBanners\LogosBannersComponent.razor"
+#line 49 "C:\Codigos\EMarket\WebApp\Pages\LogosBanners\LogosBannersComponent.razor"
        
     private Banners banners;
     private List<Banners> carrosselBanners;
+    private ToastParameters _toastParameters, _toastParametersError, _toastParametersError2, _toastParametersError3;
 
     protected override void OnInitialized()
     {
@@ -181,22 +203,47 @@ using Library.UseCaseInterfaces.IBanners;
 
     private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
     {
-        var fileFormat = "image/png";
-        var bannerFile = inputFileChangeEventArgs.GetMultipleFiles();
-
-        foreach (var baner in bannerFile)
+        var maxFilesError = false;
+        if (inputFileChangeEventArgs.GetMultipleFiles(20).Count > 8)
+            maxFilesError = true;
+        try
         {
-            var resizedImageFile = await baner.RequestImageFileAsync(fileFormat, 100, 100);
-            var buffer = new byte[baner.Size];
-            await baner.OpenReadStream().ReadAsync(buffer);
+            var fileFormat = "image/png";
+            var bannerFile = inputFileChangeEventArgs.GetMultipleFiles();
 
-            banners = new Banners
-                {
-                    BannerUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
-                    Banner = buffer
-                };
+            foreach (var baner in bannerFile)
+            {
+                var resizedImageFile = await baner.RequestImageFileAsync(fileFormat, 100, 100);
+                var buffer = new byte[baner.Size];
+                await baner.OpenReadStream(2500000).ReadAsync(buffer);
 
-            carrosselBanners.Add(banners);
+                banners = new Banners
+                    {
+                        DataCadastro = new DateTime(),
+                        BannerUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                        Banner = buffer
+                    };
+                carrosselBanners.Add(banners);
+            }
+        }
+        catch
+        {
+            if (!maxFilesError)
+            {
+                _toastParametersError2 = new ToastParameters();
+                _toastParametersError2.Add(nameof(MyToastComponent.Message), "Não é possivel carregar imagens de tamanho superior a 2.5MB!");
+                _toastParametersError2.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError2, new ToastInstanceSettings(6, true));
+            }
+            else
+            {
+                _toastParametersError3 = new ToastParameters();
+                _toastParametersError3.Add(nameof(MyToastComponent.Message), "Selecione no máximo 8 imagens.");
+                _toastParametersError3.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError3, new ToastInstanceSettings(6, true));
+            }
         }
     }
 
@@ -204,7 +251,7 @@ using Library.UseCaseInterfaces.IBanners;
     {
         base.OnParametersSet();
 
-        carrosselBanners = GetBanners.Execute();
+        carrosselBanners = GetBanners?.Execute();
 
     }
 
@@ -215,12 +262,32 @@ using Library.UseCaseInterfaces.IBanners;
 
     private void OnValidSubmit()
     {
-        NavigationManager.NavigateTo("/logos-banners");
+        try
+        {
+            Banners.Execute(carrosselBanners);
+
+            _toastParameters = new ToastParameters();
+            _toastParameters.Add(nameof(MyToastComponent.Message), "Banner(s) Salvo(s) Com Sucesso!!");
+            _toastParameters.Add(nameof(MyToastComponent.Type), EnumTipoToast.Sucesso);
+
+            toastService.ShowToast<MyToastComponent>(_toastParameters, new ToastInstanceSettings(6, true));
+
+        }
+        catch (Exception ex)
+        {
+            _toastParametersError = new ToastParameters();
+            _toastParametersError.Add(nameof(MyToastComponent.Message), "Erro ao Salvar Banner(s)! \n" + ex);
+            _toastParametersError.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+            toastService.ShowToast<MyToastComponent>(_toastParametersError, new ToastInstanceSettings(6, true));
+        }
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IToastService toastService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IAddOrRemoveBanners Banners { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewBanners ViewBanners { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetBanners GetBanners { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }

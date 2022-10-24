@@ -145,6 +145,20 @@ using WebApp.Areas.Identity;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 20 "C:\Codigos\EMarket\WebApp\_Imports.razor"
+using Blazored.Toast;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 21 "C:\Codigos\EMarket\WebApp\_Imports.razor"
+using Blazored.Toast.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SelectProdutoForSellingComponent : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

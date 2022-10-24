@@ -186,3 +186,10 @@ new Chart(ctx2, {
         },
     },
 });
+
+$(".currencyMask").change(function () {
+    if (!$.isNumeric($(this).val()))
+        $(this).val('0').trigger('change');
+
+    $(this).val(parseFloat($(this).val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+});

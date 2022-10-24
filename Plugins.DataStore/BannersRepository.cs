@@ -17,19 +17,23 @@ namespace Plugins.DataStore
             this.context = context;
         }
 
-        public void AddBanner(List<Banners> imgs)
+        public void AddOrRemoveBanners(List<Banners> imgs)
         {
+            var banners = context.Banners?.ToList();
+
+            var includedBanners = imgs?.Except(banners).ToList();
+            var excludedBanners = banners?.Except(imgs).ToList();
+
             if (imgs != null)
             {
-                foreach (var banner in imgs)
+                if (excludedBanners.Count != 0)
                 {
-                    context.Banners.Add(new Banners
-                    {
-                        Banner = banner.Banner,
-                        BannerUrl = banner.BannerUrl,
-                        ContentType = banner.ContentType,
-                        Tipo = banner.Tipo
-                    });
+                    context.Banners.RemoveRange(excludedBanners);
+                    context.SaveChanges();
+                }
+                else if (includedBanners.Count != 0)
+                {
+                    context.Banners.AddRange(includedBanners);
                     context.SaveChanges();
                 }
             }
@@ -38,19 +42,6 @@ namespace Plugins.DataStore
         public List<Banners> GetBanners()
         {
             return context.Banners?.ToList();
-        }
-
-        public void UpdateBanners(List<Banners> imgs)
-        {
-            var banners = context.Banners.ToList();
-
-            var includedBanners = imgs.Except(banners).ToList();
-            var excludedBanners = banners.Except(imgs).ToList();
-
-            context.Banners.RemoveRange(excludedBanners);
-            context.SaveChanges();
-            context.Banners.AddRange(includedBanners);
-            context.SaveChanges();
         }
     }
 }

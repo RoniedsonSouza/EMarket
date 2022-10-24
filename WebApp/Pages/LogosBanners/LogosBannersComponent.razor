@@ -1,10 +1,13 @@
 ﻿@page "/logos-banners"
+@using CoreBusiness.Enum
 @using Library.UseCaseInterfaces.IBanners
 @attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IGetBanners GetBanners
 @inject IViewBanners ViewBanners
+@inject IAddOrRemoveBanners Banners
+@inject IToastService toastService
 
 <h3>Logos e Banners</h3>
 <br />
@@ -15,17 +18,7 @@
     <ValidationSummary></ValidationSummary>
     <div class="col-sm-12">
         <label for="banners">Banners</label>
-        <div id="gridBanners" class="form-group">
-            @*@foreach (var img in carrosselBanners.Select((value, index) => new { value, index }))
-            {
-            <div id="divBanners">
-            <a class="btn-remove-img text-dark" @onclick="@(() => RemoveBanner(img.index))" title="Excluir Banner">
-            <span class="fa fa-times"></span>
-            </a>
-            <img class="banner" src="@img.value.BannerUrl" multiple />
-            </div>
-            }*@
-
+        <div id="gridBanners" class="form-group custom-scroll">
             @foreach (var img in carrosselBanners.Select((value, index) => new { value, index }))
             {
                 <div class="card">
@@ -38,20 +31,25 @@
                 </div>
             }
 
-            <div class="card custom-file text-center">
-                <InputFile id="banners" class="custom-file-input" OnChange="@OnInputFileChanged" multiple></InputFile>
-                <div class="card-body">
-                    <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
-                    <div class="card-footer">Adicionar Banner</div>
+            @if (carrosselBanners.Count < 8)
+            {
+                <div class="card custom-file text-center">
+                    <InputFile id="banners" class="custom-file-input" OnChange="@OnInputFileChanged" multiple accept="image/png, image/jpeg"></InputFile>
+                    <div class="card-body">
+                        <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
+                        <div class="card-footer">Adicionar Banner</div>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
+    <button type="submit" class="btn bg-gradient-info">Salvar</button>
 </EditForm>
 
 @code {
     private Banners banners;
     private List<Banners> carrosselBanners;
+    private ToastParameters _toastParameters, _toastParametersError, _toastParametersError2, _toastParametersError3;
 
     protected override void OnInitialized()
     {
@@ -61,22 +59,47 @@
 
     private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
     {
-        var fileFormat = "image/png";
-        var bannerFile = inputFileChangeEventArgs.GetMultipleFiles();
-
-        foreach (var baner in bannerFile)
+        var maxFilesError = false;
+        if (inputFileChangeEventArgs.GetMultipleFiles(20).Count > 8)
+            maxFilesError = true;
+        try
         {
-            var resizedImageFile = await baner.RequestImageFileAsync(fileFormat, 100, 100);
-            var buffer = new byte[baner.Size];
-            await baner.OpenReadStream().ReadAsync(buffer);
+            var fileFormat = "image/png";
+            var bannerFile = inputFileChangeEventArgs.GetMultipleFiles();
 
-            banners = new Banners
-                {
-                    BannerUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
-                    Banner = buffer
-                };
+            foreach (var baner in bannerFile)
+            {
+                var resizedImageFile = await baner.RequestImageFileAsync(fileFormat, 100, 100);
+                var buffer = new byte[baner.Size];
+                await baner.OpenReadStream(2500000).ReadAsync(buffer);
 
-            carrosselBanners.Add(banners);
+                banners = new Banners
+                    {
+                        DataCadastro = new DateTime(),
+                        BannerUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                        Banner = buffer
+                    };
+                carrosselBanners.Add(banners);
+            }
+        }
+        catch
+        {
+            if (!maxFilesError)
+            {
+                _toastParametersError2 = new ToastParameters();
+                _toastParametersError2.Add(nameof(MyToastComponent.Message), "Não é possivel carregar imagens de tamanho superior a 2.5MB!");
+                _toastParametersError2.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError2, new ToastInstanceSettings(6, true));
+            }
+            else
+            {
+                _toastParametersError3 = new ToastParameters();
+                _toastParametersError3.Add(nameof(MyToastComponent.Message), "Selecione no máximo 8 imagens.");
+                _toastParametersError3.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError3, new ToastInstanceSettings(6, true));
+            }
         }
     }
 
@@ -84,7 +107,7 @@
     {
         base.OnParametersSet();
 
-        carrosselBanners = GetBanners.Execute();
+        carrosselBanners = GetBanners?.Execute();
 
     }
 
@@ -95,6 +118,24 @@
 
     private void OnValidSubmit()
     {
-        NavigationManager.NavigateTo("/logos-banners");
+        try
+        {
+            Banners.Execute(carrosselBanners);
+
+            _toastParameters = new ToastParameters();
+            _toastParameters.Add(nameof(MyToastComponent.Message), "Banner(s) Salvo(s) Com Sucesso!!");
+            _toastParameters.Add(nameof(MyToastComponent.Type), EnumTipoToast.Sucesso);
+
+            toastService.ShowToast<MyToastComponent>(_toastParameters, new ToastInstanceSettings(6, true));
+
+        }
+        catch (Exception ex)
+        {
+            _toastParametersError = new ToastParameters();
+            _toastParametersError.Add(nameof(MyToastComponent.Message), "Erro ao Salvar Banner(s)! \n" + ex);
+            _toastParametersError.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+            toastService.ShowToast<MyToastComponent>(_toastParametersError, new ToastInstanceSettings(6, true));
+        }
     }
 }

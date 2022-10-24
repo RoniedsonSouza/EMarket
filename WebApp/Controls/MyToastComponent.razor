@@ -1,0 +1,61 @@
+﻿@using CoreBusiness.Enum
+@inject IToastService toastService
+
+@if (string.IsNullOrWhiteSpace(Title) && !string.IsNullOrWhiteSpace(Message))
+{
+    <div class="text-white p-4 rounded toast-b @BackgroundToast(Type)">
+        <p class="mb-0" style="flex-grow: 2;">@Message</p>
+        <button class="blazored-toast-close" @onclick="CloseToast">
+            <i aria-label="icon: close" class="blazored-toast-close-icon">
+                <span>×</span>
+            </i>
+        </button>
+    </div>
+}
+else
+{
+    <div class="text-white p-4 rounded @BackgroundToast(Type)">
+        <div class="toast-b">
+            <h6 style="flex-grow: 2;">@Title</h6>
+            <button class="blazored-toast-close" @onclick="CloseToast">
+                <i aria-label="icon: close" class="blazored-toast-close-icon">
+                    <span>×</span>
+                </i>
+            </button>
+        </div>
+        <p class="mb-0">@Message</p>
+
+    </div>
+}
+
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Message { get; set; }
+    [Parameter] public EnumTipoToast Type { get; set; }
+
+    public void CloseToast() => toastService.ClearCustomToasts();
+
+    private string BackgroundToast(EnumTipoToast type)
+    {
+        var colorToast = "";
+        switch (type)
+        {
+            case EnumTipoToast.Sucesso:
+                colorToast = "blazored-toast-success";
+                break;
+            case EnumTipoToast.Warning:
+                colorToast = "blazored-toast-warning";
+                break;
+            case EnumTipoToast.Info:
+                colorToast = "blazored-toast-info";
+                break;
+            case EnumTipoToast.Error:
+                colorToast = "blazored-toast-error";
+                break;
+        }
+        return colorToast;
+    }
+}
+
+

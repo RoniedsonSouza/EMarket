@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Produtos\Commands\INotyfService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.14" />
     <PackageReference Include="PagedList" Version="1.17.0" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
@@ -12,10 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Banners\Commands\" />
   </ItemGroup>
 
 </Project>

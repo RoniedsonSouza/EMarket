@@ -146,6 +146,20 @@ using WebApp.Areas.Identity;
 #line hidden
 #nullable disable
 #nullable restore
+#line 20 "C:\Codigos\EMarket\WebApp\_Imports.razor"
+using Blazored.Toast;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 21 "C:\Codigos\EMarket\WebApp\_Imports.razor"
+using Blazored.Toast.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Codigos\EMarket\WebApp\Pages\Produtos\AddProdutoComponent.razor"
 using System.Drawing;
 
@@ -161,6 +175,13 @@ using System.IO;
 #nullable disable
 #nullable restore
 #line 4 "C:\Codigos\EMarket\WebApp\Pages\Produtos\AddProdutoComponent.razor"
+using CoreBusiness.Enum;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Codigos\EMarket\WebApp\Pages\Produtos\AddProdutoComponent.razor"
            [Authorize(Policy = "Admin")]
 
 #line default
@@ -175,7 +196,7 @@ using System.IO;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 90 "C:\Codigos\EMarket\WebApp\Pages\Produtos\AddProdutoComponent.razor"
+#line 106 "C:\Codigos\EMarket\WebApp\Pages\Produtos\AddProdutoComponent.razor"
        
 
     private Produto produto;
@@ -183,6 +204,7 @@ using System.IO;
     private List<ImagensProdutos> imagens;
     private Image img;
     private IEnumerable<Category> categories;
+    private ToastParameters _toastParameters, _toastParametersError, _toastParametersError2, _toastParametersError3;
 
     protected override void OnInitialized()
     {
@@ -195,22 +217,47 @@ using System.IO;
 
     private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
     {
-        var fileFormat = "image/png";
-        var imageFile = inputFileChangeEventArgs.GetMultipleFiles();
-
-        foreach (var image in imageFile)
+        var maxFilesError = false;
+        if (inputFileChangeEventArgs.GetMultipleFiles(20).Count > 8)
+            maxFilesError = true;
+        try
         {
-            var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
-            var buffer = new byte[image.Size];
-            await image.OpenReadStream().ReadAsync(buffer);
+            var fileFormat = "image/png";
+            var imageFile = inputFileChangeEventArgs.GetMultipleFiles(12);
 
-            imagem = new ImagensProdutos
-                {
-                    ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
-                    Imagem = buffer
-                };
+            foreach (var image in imageFile)
+            {
+                var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
+                var buffer = new byte[image.Size];
+                await image.OpenReadStream(2500000).ReadAsync(buffer);
 
-            imagens.Add(imagem);
+                imagem = new ImagensProdutos
+                    {
+                        ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                        Imagem = buffer
+                    };
+
+                imagens.Add(imagem);
+            }
+        }
+        catch
+        {
+            if (!maxFilesError)
+            {
+                _toastParametersError = new ToastParameters();
+                _toastParametersError.Add(nameof(MyToastComponent.Message), "Não é possivel carregar imagens de tamanho superior a 2.5MB!");
+                _toastParametersError.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError, new ToastInstanceSettings(6, true));
+            }
+            else
+            {
+                _toastParametersError2 = new ToastParameters();
+                _toastParametersError2.Add(nameof(MyToastComponent.Message), "Selecione no máximo 8 imagens.");
+                _toastParametersError2.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError2, new ToastInstanceSettings(6, true));
+            }
         }
     }
 
@@ -221,9 +268,26 @@ using System.IO;
 
     private void OnValidSubmit()
     {
-        IAddProduto.Execute(produto);
-        IAddImagem.Execute(produto, imagens);
-        NavigationManager.NavigateTo("/produtos/1");
+        try
+        {
+            IAddProduto.Execute(produto);
+            IAddImagem.Execute(produto, imagens);
+            NavigationManager.NavigateTo("/produtos/1");
+
+            _toastParameters = new ToastParameters();
+            _toastParameters.Add(nameof(MyToastComponent.Message), "Produto Adicionado Com Sucesso!!");
+            _toastParameters.Add(nameof(MyToastComponent.Type), EnumTipoToast.Sucesso);
+
+            toastService.ShowToast<MyToastComponent>(_toastParameters, new ToastInstanceSettings(6, true));
+        }
+        catch (Exception ex)
+        {
+            _toastParametersError3 = new ToastParameters();
+            _toastParametersError3.Add(nameof(MyToastComponent.Message), "Erro ao Salvar o Produto! \n\n" + ex);
+            _toastParametersError3.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+            toastService.ShowToast<MyToastComponent>(_toastParametersError3, new ToastInstanceSettings(6, true));
+        }
     }
 
     private void OnCancel()
@@ -234,6 +298,7 @@ using System.IO;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IToastService toastService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IViewCategoriesUseCase ViewCategories { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IGetCategoryById GetCategoryById { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IAddImagem IAddImagem { get; set; }

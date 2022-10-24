@@ -1,3 +1,5 @@
+using Blazored.Toast;
+using Library.Banners.Commands;
 using Library.Banners.Queryes;
 using Library.Categoria;
 using Library.Categoria.Commands;
@@ -40,6 +42,7 @@ namespace WebApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddBlazoredToast();
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
@@ -93,6 +96,7 @@ namespace WebApp
             services.AddTransient<IGetEstatisticasDashboard, GetEstatisticasDashboard>();
             services.AddTransient<IGetBanners, GetBanners>();
             services.AddTransient<IViewBanners, ViewBanners>();
+            services.AddTransient<IAddOrRemoveBanners, AddOrRemoveBanners>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

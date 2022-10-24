@@ -1,6 +1,7 @@
 ﻿@page "/produtos/NovoProduto"
 @using System.Drawing
 @using System.IO
+@using CoreBusiness.Enum
 @attribute [Authorize(Policy = "Admin")]
 
 @inject NavigationManager NavigationManager
@@ -8,6 +9,8 @@
 @inject IAddImagem IAddImagem
 @inject IGetCategoryById GetCategoryById
 @inject IViewCategoriesUseCase ViewCategories
+@inject IToastService toastService
+
 
 <h3>Novo Produto</h3>
 <br />
@@ -61,28 +64,41 @@
             </div>
             <div class="col-sm-6">
                 <label for="foto">Fotos do Produto</label>
-                @if (imagens.Count() > 0)
-                {
-                    <div id="gridImagens" class="form-group">
-                        @foreach (var img in imagens.Select((value, index) => new { value, index }))
-                        {
-                            <div id="divImagens">
-                                <a class="btn-remove-img text-dark" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
-                                    <span class="fa fa-times"></span>
-                                </a>
-                                <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
-                            </div>
-                        }
-                    </div>
-                }
 
-                <div class="form-group">
-                    <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control"></InputFile>
+                <div id="gridImagens" class="mb-3 custom-scroll">
+                    @foreach (var img in imagens.Select((value, index) => new { value, index }))
+                    {
+                        <div id="divImagens">
+                            <a style="letter-spacing:0rem;" class="btn-remove-img text-dark" @onclick="@(() => RemoveImagem(img.index))" title="Excluir Imagem">
+                                <span class="fa fa-times"></span>
+                            </a>
+                            <img class="imagensProduto" src="@img.value.ImageUrl" multiple />
+                        </div>
+                    }
+                    @if (imagens.Count < 12)
+                    {
+                        <div class="card custom-file text-center">
+                            <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="custom-file-input" accept="image/png, image/jpeg"></InputFile>
+                            <div class="card-body">
+                                <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
+                                <div class="card-footer card-footer-imgs">Adicionar Imagem</div>
+                            </div>
+                        </div>
+                    }
                 </div>
+                <div style="display: grid;">
+                    <label class="mb-0">- Selecione imagens de no máximo 2.5MB</label>
+                    <label class="mb-0">- Selecione no máximo 12 imagens</label>
+                </div>
+                @*<div class="form-group">
+            <InputFile id="imagens" OnChange="@OnInputFileChanged" multiple class="form-control" accept="image/png, image/jpeg"></InputFile>
+            </div>*@
             </div>
         </div>
-        <button type="submit" class="btn bg-gradient-info">Adicionar</button>
-        <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
+        <div class="button-align-2">
+            <button type="submit" class="btn bg-gradient-info">Adicionar</button>
+            <button type="button" class="btn bg-gradient-danger" @onclick="OnCancel">Cancelar</button>
+        </div>
     </EditForm>
 
 }
@@ -94,6 +110,7 @@
     private List<ImagensProdutos> imagens;
     private Image img;
     private IEnumerable<Category> categories;
+    private ToastParameters _toastParameters, _toastParametersError, _toastParametersError2, _toastParametersError3;
 
     protected override void OnInitialized()
     {
@@ -106,22 +123,47 @@
 
     private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEventArgs)
     {
-        var fileFormat = "image/png";
-        var imageFile = inputFileChangeEventArgs.GetMultipleFiles();
-
-        foreach (var image in imageFile)
+        var maxFilesError = false;
+        if (inputFileChangeEventArgs.GetMultipleFiles(20).Count > 8)
+            maxFilesError = true;
+        try
         {
-            var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
-            var buffer = new byte[image.Size];
-            await image.OpenReadStream().ReadAsync(buffer);
+            var fileFormat = "image/png";
+            var imageFile = inputFileChangeEventArgs.GetMultipleFiles(12);
 
-            imagem = new ImagensProdutos
-                {
-                    ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
-                    Imagem = buffer
-                };
+            foreach (var image in imageFile)
+            {
+                var resizedImageFile = await image.RequestImageFileAsync(fileFormat, 100, 100);
+                var buffer = new byte[image.Size];
+                await image.OpenReadStream(2500000).ReadAsync(buffer);
 
-            imagens.Add(imagem);
+                imagem = new ImagensProdutos
+                    {
+                        ImageUrl = $"data:{fileFormat};base64,{Convert.ToBase64String(buffer)}",
+                        Imagem = buffer
+                    };
+
+                imagens.Add(imagem);
+            }
+        }
+        catch
+        {
+            if (!maxFilesError)
+            {
+                _toastParametersError = new ToastParameters();
+                _toastParametersError.Add(nameof(MyToastComponent.Message), "Não é possivel carregar imagens de tamanho superior a 2.5MB!");
+                _toastParametersError.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError, new ToastInstanceSettings(6, true));
+            }
+            else
+            {
+                _toastParametersError2 = new ToastParameters();
+                _toastParametersError2.Add(nameof(MyToastComponent.Message), "Selecione no máximo 8 imagens.");
+                _toastParametersError2.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+                toastService.ShowToast<MyToastComponent>(_toastParametersError2, new ToastInstanceSettings(6, true));
+            }
         }
     }
 
@@ -132,9 +174,26 @@
 
     private void OnValidSubmit()
     {
-        IAddProduto.Execute(produto);
-        IAddImagem.Execute(produto, imagens);
-        NavigationManager.NavigateTo("/produtos/1");
+        try
+        {
+            IAddProduto.Execute(produto);
+            IAddImagem.Execute(produto, imagens);
+            NavigationManager.NavigateTo("/produtos/1");
+
+            _toastParameters = new ToastParameters();
+            _toastParameters.Add(nameof(MyToastComponent.Message), "Produto Adicionado Com Sucesso!!");
+            _toastParameters.Add(nameof(MyToastComponent.Type), EnumTipoToast.Sucesso);
+
+            toastService.ShowToast<MyToastComponent>(_toastParameters, new ToastInstanceSettings(6, true));
+        }
+        catch (Exception ex)
+        {
+            _toastParametersError3 = new ToastParameters();
+            _toastParametersError3.Add(nameof(MyToastComponent.Message), "Erro ao Salvar o Produto! \n\n" + ex);
+            _toastParametersError3.Add(nameof(MyToastComponent.Type), EnumTipoToast.Error);
+
+            toastService.ShowToast<MyToastComponent>(_toastParametersError3, new ToastInstanceSettings(6, true));
+        }
     }
 
     private void OnCancel()
